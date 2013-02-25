@@ -23,7 +23,7 @@ public class Game extends BasicGame{
 
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
-		System.out.println("test push from ubuntu");
+		
 	}
 	
 	@Override
