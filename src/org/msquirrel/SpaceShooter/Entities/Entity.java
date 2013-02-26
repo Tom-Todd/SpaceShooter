@@ -5,18 +5,27 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Vector2f;
 
 public class Entity {
-	private float x;
-	private float y;
-	private boolean alive;
-	private Image entityImage;
-	private Rectangle hitBox;
+	protected float x;
+	protected float y;
+	protected Vector2f velocity;
+	protected boolean alive;
+	protected Rectangle hitBox;
+	protected boolean isMoving;
+	protected Image entityImage;
+	protected boolean movingUp;
+	protected boolean movingDown;
+	protected boolean movingLeft;
+	protected boolean movingRight;
+	protected float speed = 0.3f;
 	
-	public Entity(float x, float y){
+	public Entity(float x, float y) throws SlickException{
 		this.x = x;
 		this.y = y;
-		this.hitBox = new Rectangle(this.x, this.y, entityImage.getWidth(), entityImage.getHeight());
+		this.hitBox = new Rectangle(x,y,10,10);
+		velocity = new Vector2f();
 	}
 	
 	public void setHitBox(float x, float y, float width, float height){
@@ -27,12 +36,45 @@ public class Entity {
 		return hitBox;
 	}
 	
-	public void update(GameContainer container, int delta){
+	public void move(){
+		velocity.x = 0;
+		velocity.y = 0;
+		if(movingRight){
+			velocity.x = speed;
+		}
+		if(movingLeft){
+			velocity.x = -(speed);
+		}
+		if(movingUp){
+			velocity.y = -(speed);
+		}
+		if(movingDown){
+			velocity.y = speed;
+		}
 		
+		if(movingRight && movingUp){
+			velocity.x = (float) Math.sqrt(((speed*speed)/2));
+			velocity.y = (float) -Math.sqrt(((speed*speed)/2));
+		}
+		if(movingLeft && movingUp){
+			velocity.x = (float) -Math.sqrt(((speed*speed)/2));
+			velocity.y = (float) -Math.sqrt(((speed*speed)/2));
+		}
+		if(movingRight && movingDown){
+			velocity.x = (float) Math.sqrt(((speed*speed)/2));
+			velocity.y = (float) Math.sqrt(((speed*speed)/2));
+		}
+		if(movingLeft && movingDown){
+			velocity.x = (float) -Math.sqrt(((speed*speed)/2));
+			velocity.y = (float) Math.sqrt(((speed*speed)/2));
+		}
+		x += velocity.x;
+		y += velocity.y;
 	}
 	
 	public void draw(Graphics g){
-		
+		entityImage.draw(x,y);
+		g.draw(hitBox);
 	}
 
 	public boolean isAlive() {
@@ -56,7 +98,6 @@ public class Entity {
 	public float getY() {
 		return y;
 	}
-
 
 	public void setY(float y) {
 		this.y = y;

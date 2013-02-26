@@ -14,16 +14,14 @@ public class Game extends BasicGame{
 		super(title);
 	}
 
-	
-
 	@Override
 	public void init(GameContainer container) throws SlickException {
-		player = new Player(100, 100);
+		player = new Player(150, 100);
 	}
 
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
-		
+		player.update(container, delta);
 	}
 	
 	@Override
