@@ -22,6 +22,10 @@ public class World {
 		
 	}
 	
+	public void addEntity(){
+
+	}
+	
 	public void draw(Graphics g){
 		
 	}
