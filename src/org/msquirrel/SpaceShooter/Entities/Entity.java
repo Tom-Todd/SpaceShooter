@@ -1,5 +1,6 @@
 package org.msquirrel.SpaceShooter.Entities;
 
+import org.msquirrel.SpaceShooter.World;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -10,8 +11,10 @@ import org.newdawn.slick.geom.Vector2f;
 public class Entity {
 	protected float x;
 	protected float y;
+	protected World world;
 	protected Vector2f velocity;
-	protected boolean alive;
+	protected int lifeTime;
+	protected boolean alive = true;
 	protected Rectangle hitBox;
 	protected boolean isMoving;
 	protected Image entityImage;
@@ -20,10 +23,12 @@ public class Entity {
 	protected boolean movingLeft;
 	protected boolean movingRight;
 	protected float speed = 0.3f;
+	protected float bulletSpeed = 1;
 	
-	public Entity(float x, float y) throws SlickException{
+	public Entity(float x, float y, World world) throws SlickException{
 		this.x = x;
 		this.y = y;
+		this.world = world;
 		this.hitBox = new Rectangle(x,y,10,10);
 		velocity = new Vector2f();
 	}
@@ -36,7 +41,10 @@ public class Entity {
 		return hitBox;
 	}
 	
-	public void move(){
+	public void update(GameContainer container, int delta) throws SlickException{
+	}
+	
+	public void move(int delta){
 		velocity.x = 0;
 		velocity.y = 0;
 		if(movingRight){
@@ -68,8 +76,10 @@ public class Entity {
 			velocity.x = (float) -Math.sqrt(((speed*speed)/2));
 			velocity.y = (float) Math.sqrt(((speed*speed)/2));
 		}
-		x += velocity.x;
-		y += velocity.y;
+		
+		
+		x += velocity.x*delta;
+		y += velocity.y*delta;
 	}
 	
 	public void draw(Graphics g){
@@ -79,6 +89,10 @@ public class Entity {
 
 	public boolean isAlive() {
 		return alive;
+	}
+	
+	public void die(){
+		world.entities.remove(this);
 	}
 	
 	public void setAlive(boolean alive) {

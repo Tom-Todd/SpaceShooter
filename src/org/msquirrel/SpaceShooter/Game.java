@@ -1,14 +1,18 @@
 package org.msquirrel.SpaceShooter;
 
+
 import org.msquirrel.SpaceShooter.Entities.Player;
+import org.msquirrel.SpaceShooter.Entities.bullet;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
+
 public class Game extends BasicGame{
-	private Player player;
+	private World world;
 	
 	public Game(String title) {
 		super(title);
@@ -16,17 +20,19 @@ public class Game extends BasicGame{
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
-		player = new Player(150, 100);
+		world = new World();
+		container.setVSync(true);
+		container.setTargetFrameRate(60);
 	}
 
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
-		player.update(container, delta);
+		world.update(container, delta);
 	}
 	
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		player.draw(g);
+		world.draw(g);
 	}
 	
 	public static void main(String[] argv) {
