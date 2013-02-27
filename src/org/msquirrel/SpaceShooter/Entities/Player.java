@@ -20,13 +20,25 @@ public class Player extends Entity{
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException{
 		setHitBox(x, y, entityImage.getWidth(), entityImage.getHeight());
-		movingRight = container.getInput().isKeyDown(Input.KEY_RIGHT);
-		movingLeft = container.getInput().isKeyDown(Input.KEY_LEFT);
-		movingUp = container.getInput().isKeyDown(Input.KEY_UP);
-		movingDown = container.getInput().isKeyDown(Input.KEY_DOWN);
-		if(container.getInput().isKeyPressed(Input.KEY_SPACE)){
-			world.entities.add(new bullet(this.x, this.y, world));
+		movingUp = container.getInput().isKeyDown(Input.KEY_W);
+		movingRight = container.getInput().isKeyDown(Input.KEY_D);
+		movingLeft = container.getInput().isKeyDown(Input.KEY_A);	
+		movingDown = container.getInput().isKeyDown(Input.KEY_S);
+		attacking = container.getInput().isKeyPressed(Input.KEY_SPACE);
+	
+		if(attacking && movingRight){
+			world.entities.add(new bullet(this.x, this.y, world, 2));
 		}
+		if(attacking && movingLeft){
+			world.entities.add(new bullet(this.x, this.y, world, 3));
+		}
+		if(attacking && movingUp){
+			world.entities.add(new bullet(this.x, this.y, world, 0));
+		}
+		if(attacking && movingDown){
+			world.entities.add(new bullet(this.x, this.y, world, 1));
+		}
+		
 		move(delta);
 	}
 }

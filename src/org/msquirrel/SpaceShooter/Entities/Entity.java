@@ -22,6 +22,11 @@ public class Entity {
 	protected boolean movingDown;
 	protected boolean movingLeft;
 	protected boolean movingRight;
+	protected boolean movingUpRight;
+	protected boolean movingUpLeft;
+	protected boolean movingDownRight;
+	protected boolean movingDownLeft;
+	protected boolean attacking;
 	protected float speed = 0.3f;
 	protected float bulletSpeed = 1;
 	

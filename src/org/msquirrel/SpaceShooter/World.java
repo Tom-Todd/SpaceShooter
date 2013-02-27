@@ -24,11 +24,12 @@ public class World {
 	
 	public void update(GameContainer container, int delta) throws SlickException{
 		player.update(container, delta);
-		for(Entity entity : entities){
-			if(entity != null && entity.isAlive()){
-				entity.update(container, delta);
+		for(int i = 0; i < entities.size();i++){
+			if(entities.get(i) != null){
+				entities.get(i).update(container, delta);
 			}
 		}
+		
 	}
 	
 	public void removeEntity(Entity entity){
