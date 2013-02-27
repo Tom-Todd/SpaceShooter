@@ -1,6 +1,7 @@
 package org.msquirrel.SpaceShooter.Entities;
 
 import org.msquirrel.SpaceShooter.World;
+import org.msquirrel.SpaceShooter.Entities.Projectiles.bullet;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -9,6 +10,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
 public class Player extends Entity{
+	protected int ShootCounter;
 	
 	public Player(float x, float y, World world) throws SlickException{
 		super(x, y, world);
@@ -24,20 +26,12 @@ public class Player extends Entity{
 		movingRight = container.getInput().isKeyDown(Input.KEY_D);
 		movingLeft = container.getInput().isKeyDown(Input.KEY_A);	
 		movingDown = container.getInput().isKeyDown(Input.KEY_S);
-		attacking = container.getInput().isKeyPressed(Input.KEY_SPACE);
 	
-		if(attacking && movingRight){
-			world.entities.add(new bullet(this.x, this.y, world, 2));
+		if(container.getInput().isMouseButtonDown(0) && ShootCounter > 10){
+			world.entities.add(new bullet(this.x, this.y, (float)container.getInput().getMouseX(), (float)container.getInput().getMouseY(), world));
+			ShootCounter = 0;
 		}
-		if(attacking && movingLeft){
-			world.entities.add(new bullet(this.x, this.y, world, 3));
-		}
-		if(attacking && movingUp){
-			world.entities.add(new bullet(this.x, this.y, world, 0));
-		}
-		if(attacking && movingDown){
-			world.entities.add(new bullet(this.x, this.y, world, 1));
-		}
+		ShootCounter++;
 		
 		move(delta);
 	}

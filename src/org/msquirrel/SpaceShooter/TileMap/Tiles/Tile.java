@@ -1,11 +1,18 @@
 package org.msquirrel.SpaceShooter.TileMap.Tiles;
 
+import org.newdawn.slick.Graphics;
+
 public class Tile {
-	private int x;
-	private int y;
+	protected int x;
+	protected int y;
 	private boolean Blocked;
 	
-	public Tile(){
+	public Tile(int x, int y){
+		this.x = x*64;
+		this.y = y*64;
+	}
+	
+	public void draw(Graphics g){
 		
 	}
 	

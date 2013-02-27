@@ -2,7 +2,7 @@ package org.msquirrel.SpaceShooter;
 
 
 import org.msquirrel.SpaceShooter.Entities.Player;
-import org.msquirrel.SpaceShooter.Entities.bullet;
+import org.msquirrel.SpaceShooter.Entities.Projectiles.bullet;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;

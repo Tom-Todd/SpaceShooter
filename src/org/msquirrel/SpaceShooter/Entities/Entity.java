@@ -27,8 +27,7 @@ public class Entity {
 	protected boolean movingDownRight;
 	protected boolean movingDownLeft;
 	protected boolean attacking;
-	protected float speed = 0.3f;
-	protected float bulletSpeed = 1;
+	protected float speed = 0.3f;	
 	
 	public Entity(float x, float y, World world) throws SlickException{
 		this.x = x;
