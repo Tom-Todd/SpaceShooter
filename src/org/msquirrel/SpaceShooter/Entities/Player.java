@@ -11,6 +11,7 @@ import org.newdawn.slick.geom.Rectangle;
 
 public class Player extends Entity{
 	protected int ShootCounter;
+	protected Team team = Team.PLAYER_TEAM;
 	
 	public Player(float x, float y, World world) throws SlickException{
 		super(x, y, world);
@@ -21,18 +22,17 @@ public class Player extends Entity{
 	
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException{
-		setHitBox(x, y, entityImage.getWidth(), entityImage.getHeight());
 		movingUp = container.getInput().isKeyDown(Input.KEY_W);
 		movingRight = container.getInput().isKeyDown(Input.KEY_D);
 		movingLeft = container.getInput().isKeyDown(Input.KEY_A);	
 		movingDown = container.getInput().isKeyDown(Input.KEY_S);
 	
 		if(container.getInput().isMouseButtonDown(0) && ShootCounter > 10){
-			world.entities.add(new bullet(this.x, this.y, (float)container.getInput().getMouseX(), (float)container.getInput().getMouseY(), world));
+			world.projectiles.add(new bullet(this.x, this.y, (float)container.getInput().getMouseX(), (float)container.getInput().getMouseY(), world, this));
 			ShootCounter = 0;
 		}
 		ShootCounter++;
-		
 		move(delta);
+		setHitBox(x, y, entityImage.getWidth(), entityImage.getHeight());
 	}
 }

@@ -9,8 +9,8 @@ import org.newdawn.slick.geom.Rectangle;
 
 public class bullet extends projectile{
 	
-	public bullet(float x, float y,float targetX, float targetY, World world) throws SlickException{
-		super(x, y, targetX, targetY, world);
+	public bullet(float x, float y,float targetX, float targetY, World world,Entity Origin) throws SlickException{
+		super(x, y, targetX, targetY, world, Origin);
 		this.entityImage = new Image("res/bullet.png");
 	}
 	
@@ -24,5 +24,16 @@ public class bullet extends projectile{
 		}
 		this.setHitBox(x, y, entityImage.getWidth(), entityImage.getHeight());
 		lifeTime++;
+		collision();
+	}
+	
+	public void collision(){
+		for(int index = 0;index < world.entities.size(); index++){
+			if(this.hitBox.intersects(world.entities.get(index).getHitBox())){
+				if(!world.entities.get(index).equals(this.Origin)){
+					
+				}
+			}
+		}
 	}
 }
