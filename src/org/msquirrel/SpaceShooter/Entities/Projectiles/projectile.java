@@ -2,6 +2,7 @@ package org.msquirrel.SpaceShooter.Entities.Projectiles;
 
 import org.msquirrel.SpaceShooter.World;
 import org.msquirrel.SpaceShooter.Entities.Entity;
+import org.msquirrel.SpaceShooter.TileMap.Map;
 import org.newdawn.slick.SlickException;
 
 public class projectile extends Entity{
@@ -25,4 +26,35 @@ public class projectile extends Entity{
 		this.projectileSpeed = projectileSpeed;
 	}
 	
+	@Override
+	public void move(int delta){
+		nextX += velocity.x*delta;
+		nextY += velocity.y*delta;
+		
+		if(!world.getMap().blocked(nextX, nextY)){
+			x += velocity.x*delta;
+			y += velocity.y*delta;
+		}else{
+			die();
+		}
+		if(world.getMap().blocked(nextX, nextY)){
+			die();
+		}
+	}
+	
+	public void collision(){
+		for(int index = 0;index < world.entities.size(); index++){
+			if(this.hitBox.intersects(world.entities.get(index).getHitBox())){
+				if(!world.entities.get(index).equals(this.Origin)){
+					world.entities.get(index).die();
+					die();
+				}
+			}
+		}
+	}
+	
+	@Override
+	public void die(){
+		world.projectiles.remove(this);
+	}
 }

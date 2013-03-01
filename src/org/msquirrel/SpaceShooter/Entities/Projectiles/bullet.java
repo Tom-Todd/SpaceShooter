@@ -16,8 +16,7 @@ public class bullet extends projectile{
 	
 	@Override
 	public void update(GameContainer container, int delta){
-		this.y += velocity.y*delta;
-		this.x += velocity.x*delta;
+		this.move(delta);
 		if(lifeTime > 50){
 			this.alive = false;
 			die();
@@ -25,15 +24,5 @@ public class bullet extends projectile{
 		this.setHitBox(x, y, entityImage.getWidth(), entityImage.getHeight());
 		lifeTime++;
 		collision();
-	}
-	
-	public void collision(){
-		for(int index = 0;index < world.entities.size(); index++){
-			if(this.hitBox.intersects(world.entities.get(index).getHitBox())){
-				if(!world.entities.get(index).equals(this.Origin)){
-					
-				}
-			}
-		}
 	}
 }

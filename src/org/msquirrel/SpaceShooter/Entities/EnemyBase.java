@@ -7,12 +7,12 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
-public class Enemy extends Entity{
+public class EnemyBase extends Entity{
 	protected Team team = Team.ENEMY_TEAM;
 	protected Player player;
 	protected int attackCounter;
 	
-	public Enemy(float x, float y, World world, Player player) throws SlickException {
+	public EnemyBase(float x, float y, World world, Player player) throws SlickException {
 		super(x, y, world);
 		this.player = player;
 		entityImage = new Image("res/Player.png");
@@ -20,7 +20,7 @@ public class Enemy extends Entity{
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException{
-		attacking = true;
+		//attacking = true;
 		if(attacking && attackCounter > 10){
 			float guessPlayerPosX = 0;
 			float guessPlayerPosY = 0;
@@ -44,6 +44,7 @@ public class Enemy extends Entity{
 			world.projectiles.add(new bullet(x, y, guessPlayerPosX, guessPlayerPosY, world, this));
 			attackCounter = 0;
 		}
+		move(delta);
 		attackCounter++;
 	}
 }

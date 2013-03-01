@@ -25,4 +25,19 @@ public class Map {
 			}
 		}
 	}
+
+	public boolean blocked(float nextX, float nextY) {
+		int x = (int) nextX/64;
+		int y = (int) nextY/64;
+		if(x > -1 && x < 32){
+			if(y > -1 && y < 32){
+				if(this.map[x][y] instanceof TileWall){
+					return true;
+				}else{
+					return false;
+				}
+			}
+		}
+		return false;
+	}
 }

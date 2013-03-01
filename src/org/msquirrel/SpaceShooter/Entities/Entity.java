@@ -1,6 +1,7 @@
 package org.msquirrel.SpaceShooter.Entities;
 
 import org.msquirrel.SpaceShooter.World;
+import org.msquirrel.SpaceShooter.TileMap.Map;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -9,29 +10,33 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
 public class Entity {
+	//Entity Values
+	protected float speed = 0.3f;
 	protected float x;
 	protected float y;
-	protected World world;
-	protected Vector2f velocity;
+	protected float nextX;
+	protected float nextY;
 	protected int lifeTime;
+	protected Vector2f velocity;
 	protected boolean alive = true;
-	protected Rectangle hitBox;
-	protected boolean isMoving;
-	protected Image entityImage;
+	//Movement
 	protected boolean movingUp;
 	protected boolean movingDown;
 	protected boolean movingLeft;
 	protected boolean movingRight;
-	protected boolean movingUpRight;
-	protected boolean movingUpLeft;
-	protected boolean movingDownRight;
-	protected boolean movingDownLeft;
+	//Other
+	protected World world;
+	protected Rectangle hitBox;
+	protected Image entityImage;
+	//Attack
 	protected boolean attacking;
-	protected float speed = 0.3f;	
+	
 	
 	public Entity(float x, float y, World world) throws SlickException{
 		this.x = x;
 		this.y = y;
+		this.nextX = x;
+		this.nextY = y;
 		this.world = world;
 		this.hitBox = new Rectangle(x,y,10,10);
 		velocity = new Vector2f();
@@ -80,10 +85,14 @@ public class Entity {
 			velocity.x = (float) -Math.sqrt(((speed*speed)/2));
 			velocity.y = (float) Math.sqrt(((speed*speed)/2));
 		}
+
+		nextX += velocity.x*delta;
+		nextY += velocity.y*delta;
 		
-		
-		x += velocity.x*delta;
-		y += velocity.y*delta;
+		if(!world.getMap().blocked(nextX, nextY)){
+			x += velocity.x*delta;
+			y += velocity.y*delta;
+		}
 	}
 	
 	public void draw(Graphics g){

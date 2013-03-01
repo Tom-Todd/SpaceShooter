@@ -16,7 +16,6 @@ public class Player extends Entity{
 	public Player(float x, float y, World world) throws SlickException{
 		super(x, y, world);
 		entityImage = new Image("res/Player.png");
-		isMoving = true;
 		hitBox = new Rectangle(x,y,entityImage.getWidth(), entityImage.getHeight());
 	}
 	

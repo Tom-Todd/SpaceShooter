@@ -3,7 +3,7 @@ package org.msquirrel.SpaceShooter;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.msquirrel.SpaceShooter.Entities.Enemy;
+import org.msquirrel.SpaceShooter.Entities.EnemyBase;
 import org.msquirrel.SpaceShooter.Entities.Entity;
 import org.msquirrel.SpaceShooter.Entities.Player;
 import org.msquirrel.SpaceShooter.Entities.Projectiles.bullet;
@@ -20,12 +20,12 @@ public class World {
 	public final List<projectile> projectiles = new ArrayList();
 	private Map map = new Map();
 	private Player player;
-	private Enemy enemy;
+	private EnemyBase enemy;
 	
 	public World() throws SlickException{
 		player = new Player(100,100, this);
-		/*entities.add(new Enemy(200, 200, this, player));
-		entities.add(new Enemy(250, 250, this, player));
+		entities.add(new EnemyBase(200, 200, this, player));
+		/*(entities.add(new Enemy(250, 250, this, player));
 		entities.add(new Enemy(400, 500, this, player));
 		entities.add(new Enemy(700, 400, this, player));
 		entities.add(new Enemy(500, 300, this, player));
@@ -53,6 +53,10 @@ public class World {
 	
 	public void addEntity(Entity entity){
 		entities.add(entity);
+	}
+	
+	public Map getMap(){
+		return map;
 	}
 	
 	public void draw(Graphics g){

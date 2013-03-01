@@ -13,7 +13,6 @@ public class TileWall extends Tile{
 	public void draw(Graphics g){
 		g.setColor(Color.darkGray);
 		g.fillRect(x, y, 64, 64);
-		System.out.println("drawing wall");
 		g.setColor(Color.black);
 		g.drawRect(x, y, 64, 64);
 	}
