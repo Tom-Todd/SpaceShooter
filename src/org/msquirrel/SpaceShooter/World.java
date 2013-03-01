@@ -22,12 +22,12 @@ public class World {
 	
 	public World() throws SlickException{
 		player = new Player(100,100, this);
-		entities.add(new Enemy(200, 200, this, player));
+		/*entities.add(new Enemy(200, 200, this, player));
 		entities.add(new Enemy(250, 250, this, player));
 		entities.add(new Enemy(400, 500, this, player));
 		entities.add(new Enemy(700, 400, this, player));
 		entities.add(new Enemy(500, 300, this, player));
-		entities.add(new Enemy(50, 20, this, player));
+		entities.add(new Enemy(50, 20, this, player));*/
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException{
