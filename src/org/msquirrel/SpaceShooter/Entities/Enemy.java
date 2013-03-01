@@ -5,8 +5,10 @@ import org.msquirrel.SpaceShooter.Entities.Projectiles.bullet;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
 
 public class Enemy extends Entity{
+	protected Team team = Team.ENEMY_TEAM;
 	protected Player player;
 	protected int attackCounter;
 	
@@ -14,6 +16,7 @@ public class Enemy extends Entity{
 		super(x, y, world);
 		this.player = player;
 		entityImage = new Image("res/Player.png");
+		hitBox = new Rectangle(x,y,entityImage.getWidth(),entityImage.getHeight());
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException{
@@ -38,7 +41,7 @@ public class Enemy extends Entity{
 				guessPlayerPosY = (player.y + (player.speed*delta));
 			}
 
-			world.entities.add(new bullet(x, y, guessPlayerPosX, guessPlayerPosY, world));
+			world.projectiles.add(new bullet(x, y, guessPlayerPosX, guessPlayerPosY, world, this));
 			attackCounter = 0;
 		}
 		attackCounter++;

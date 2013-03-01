@@ -7,6 +7,7 @@ import org.msquirrel.SpaceShooter.Entities.Enemy;
 import org.msquirrel.SpaceShooter.Entities.Entity;
 import org.msquirrel.SpaceShooter.Entities.Player;
 import org.msquirrel.SpaceShooter.Entities.Projectiles.bullet;
+import org.msquirrel.SpaceShooter.Entities.Projectiles.projectile;
 import org.msquirrel.SpaceShooter.TileMap.Map;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -16,6 +17,7 @@ public class World {
 	private static int WORLD_WIDTH;
 	private static int WORLD_HEIGHT;
 	public final List<Entity> entities = new ArrayList();
+	public final List<projectile> projectiles = new ArrayList();
 	private Map map = new Map();
 	private Player player;
 	private Enemy enemy;
@@ -37,6 +39,11 @@ public class World {
 				entities.get(i).update(container, delta);
 			}
 		}
+		for(int i = 0; i < projectiles.size();i++){
+			if(projectiles.get(i) != null){
+				projectiles.get(i).update(container, delta);
+			}
+		}
 		
 	}
 	
@@ -53,6 +60,9 @@ public class World {
 		player.draw(g);	
 		for(Entity entity : entities){
 			entity.draw(g);
+		}
+		for(projectile p : projectiles){
+			p.draw(g);
 		}
 	}
 }
