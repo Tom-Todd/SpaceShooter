@@ -10,7 +10,7 @@ public class projectile extends Entity{
 	protected Entity Origin;
 	
 	public projectile(float x, float y,float targetX, float targetY, World world, Entity Origin) throws SlickException{
-		super(x, y, world);
+		super(x, y,world);
 		this.Origin = Origin;
 		Double angle = Math.atan2((targetY - y), (targetX - x));
 		velocity.x = (float) (projectileSpeed*Math.cos(angle));
@@ -30,13 +30,13 @@ public class projectile extends Entity{
 		nextX += velocity.x*delta;
 		nextY += velocity.y*delta;
 		
-		if(!world.getMap().blocked(nextX, nextY)){
+		if(!world.getMap().blocked(nextX, nextY, width, height)){
 			x += velocity.x*delta;
 			y += velocity.y*delta;
 		}else{
 			die();
 		}
-		if(world.getMap().blocked(nextX, nextY)){
+		if(world.getMap().blocked(nextX, nextY, width, height)){
 			die();
 		}
 	}

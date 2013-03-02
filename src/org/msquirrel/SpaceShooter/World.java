@@ -18,14 +18,16 @@ public class World {
 	private static int WORLD_HEIGHT;
 	public final List<Entity> entities = new ArrayList();
 	public final List<projectile> projectiles = new ArrayList();
-	private Map map = new Map();
+	private Map map;
 	private Player player;
+	private Camera cam;
 	private EnemyBase enemy;
 	
 	public World() throws SlickException{
-		player = new Player(100,100, this);
+		this.cam = new Camera(0,0);
+		map = new Map(cam);
+		player = new Player(416,320, this, cam);
 		entities.add(player);
-		entities.add(new EnemyBase(200, 200, this, player));
 		entities.add(new EnemyBase(250, 250, this, player));
 		entities.add(new EnemyBase(400, 500, this, player));
 		entities.add(new EnemyBase(500, 300, this, player));

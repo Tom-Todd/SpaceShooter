@@ -15,6 +15,8 @@ public class EnemyBase extends Entity{
 		super(x, y, world);
 		this.player = player;
 		this.setTeam(Team.ENEMY_TEAM);
+		this.width = 16;
+		this.height = 16;
 		entityImage = new Image("res/Player.png");
 		hitBox = new Rectangle(x,y,entityImage.getWidth(),entityImage.getHeight());
 	}

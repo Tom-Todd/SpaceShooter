@@ -11,11 +11,13 @@ import org.newdawn.slick.geom.Vector2f;
 
 public class Entity {
 	//Entity Values
-	protected float speed = 0.3f;
+	protected float speed = 0.2f;
 	protected float x;
 	protected float y;
 	protected float nextX;
 	protected float nextY;
+	protected float width;
+	protected float height;
 	protected int lifeTime;
 	protected Vector2f velocity;
 	protected boolean alive = true;
@@ -43,16 +45,6 @@ public class Entity {
 		velocity = new Vector2f();
 	}
 	
-	
-	
-	public Team getTeam() {
-		return team;
-	}
-
-	public void setTeam(Team team) {
-		this.team = team;
-	}
-
 	public void setHitBox(float x, float y, float width, float height){
 		this.hitBox = new Rectangle(x,y,width,height);
 	}
@@ -100,7 +92,7 @@ public class Entity {
 		nextX += velocity.x*delta;
 		nextY += velocity.y*delta;
 		
-		if(!world.getMap().blocked(nextX, nextY)){
+		if(!world.getMap().blocked(nextX, nextY, width, height)){
 			x = nextX;
 			y = nextY;
 		}else{
@@ -122,6 +114,14 @@ public class Entity {
 	
 	public void hit(){
 		
+	}
+	
+	public Team getTeam() {
+		return team;
+	}
+
+	public void setTeam(Team team) {
+		this.team = team;
 	}
 	
 	public void die(){
@@ -148,6 +148,22 @@ public class Entity {
 
 	public void setY(float y) {
 		this.y = y;
+	}
+	
+	public float getWidth() {
+		return width;
+	}
+
+	public void setWidth(float width) {
+		this.width = width;
+	}
+
+	public float getHeight() {
+		return height;
+	}
+
+	public void setHeight(float height) {
+		this.height = height;
 	}
 	
 }

@@ -12,6 +12,8 @@ public class bullet extends projectile{
 	public bullet(float x, float y,float targetX, float targetY, World world,Entity Origin) throws SlickException{
 		super(x, y, targetX, targetY, world, Origin);
 		this.entityImage = new Image("res/bullet.png");
+		this.width = 8;
+		this.height = 8;
 	}
 	
 	@Override

@@ -1,13 +1,16 @@
 package org.msquirrel.SpaceShooter.TileMap.Tiles;
 
+import org.msquirrel.SpaceShooter.Camera;
 import org.newdawn.slick.Graphics;
 
 public class Tile {
 	protected int x;
 	protected int y;
-	private boolean Blocked;
+	protected boolean Blocked;
+	protected Camera cam;
 	
-	public Tile(int x, int y){
+	public Tile(int x, int y, Camera cam){
+		this.cam = cam;
 		this.x = x*64;
 		this.y = y*64;
 	}

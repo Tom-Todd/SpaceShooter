@@ -39,7 +39,7 @@ public class Game extends BasicGame{
 	public static void main(String[] argv) {
 		try {
 			AppGameContainer container = new AppGameContainer(new Game("Space Shooter"));
-			container.setDisplayMode(800, 600, false);
+			container.setDisplayMode(832, 640, false);
 			container.start();
 		} catch (SlickException e) {
 			e.printStackTrace();
