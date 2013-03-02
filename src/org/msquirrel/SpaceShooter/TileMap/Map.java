@@ -9,10 +9,17 @@ public class Map {
 	private Tile[][] map = new Tile[32][32];
 	
 	public Map(){
+		Bitmap loadmap = mapLoader.loadBitmap("res/map.png");
 		for(int x = 0;x < 32; x++){
 			for(int y = 0;y < 32; y++){
 				map[x][y]= new TileGround(x,y);
 				map[0][y]= new TileWall(0,y);
+				switch (loadmap.pixels[(y*32)+x]){			
+					case 0xFF999999:
+					{
+						map[x][y] = new TileWall(x,y);
+					}				
+				}				
 			}
 		}
 		

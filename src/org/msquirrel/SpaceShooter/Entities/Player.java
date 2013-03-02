@@ -11,10 +11,10 @@ import org.newdawn.slick.geom.Rectangle;
 
 public class Player extends Entity{
 	protected int ShootCounter;
-	protected Team team = Team.PLAYER_TEAM;
 	
 	public Player(float x, float y, World world) throws SlickException{
 		super(x, y, world);
+		this.setTeam(Team.PLAYER_TEAM);
 		entityImage = new Image("res/Player.png");
 		hitBox = new Rectangle(x,y,entityImage.getWidth(), entityImage.getHeight());
 	}
@@ -33,5 +33,10 @@ public class Player extends Entity{
 		ShootCounter++;
 		move(delta);
 		setHitBox(x, y, entityImage.getWidth(), entityImage.getHeight());
+	}
+	
+	@Override
+	public void die(){
+		System.out.println("Die");
 	}
 }

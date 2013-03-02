@@ -19,6 +19,7 @@ public class Entity {
 	protected int lifeTime;
 	protected Vector2f velocity;
 	protected boolean alive = true;
+	protected Team team = Team.NO_TEAM;
 	//Movement
 	protected boolean movingUp;
 	protected boolean movingDown;
@@ -42,6 +43,16 @@ public class Entity {
 		velocity = new Vector2f();
 	}
 	
+	
+	
+	public Team getTeam() {
+		return team;
+	}
+
+	public void setTeam(Team team) {
+		this.team = team;
+	}
+
 	public void setHitBox(float x, float y, float width, float height){
 		this.hitBox = new Rectangle(x,y,width,height);
 	}
@@ -90,8 +101,13 @@ public class Entity {
 		nextY += velocity.y*delta;
 		
 		if(!world.getMap().blocked(nextX, nextY)){
-			x += velocity.x*delta;
-			y += velocity.y*delta;
+			x = nextX;
+			y = nextY;
+		}else{
+			x = x;
+			y = y;
+			nextX = x;
+			nextY = y;
 		}
 	}
 	
@@ -102,6 +118,10 @@ public class Entity {
 
 	public boolean isAlive() {
 		return alive;
+	}
+	
+	public void hit(){
+		
 	}
 	
 	public void die(){

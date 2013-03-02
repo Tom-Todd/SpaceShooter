@@ -24,16 +24,14 @@ public class World {
 	
 	public World() throws SlickException{
 		player = new Player(100,100, this);
+		entities.add(player);
 		entities.add(new EnemyBase(200, 200, this, player));
-		/*(entities.add(new Enemy(250, 250, this, player));
-		entities.add(new Enemy(400, 500, this, player));
-		entities.add(new Enemy(700, 400, this, player));
-		entities.add(new Enemy(500, 300, this, player));
-		entities.add(new Enemy(50, 20, this, player));*/
+		entities.add(new EnemyBase(250, 250, this, player));
+		entities.add(new EnemyBase(400, 500, this, player));
+		entities.add(new EnemyBase(500, 300, this, player));
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException{
-		player.update(container, delta);
 		for(int i = 0; i < entities.size();i++){
 			if(entities.get(i) != null){
 				entities.get(i).update(container, delta);
@@ -61,7 +59,6 @@ public class World {
 	
 	public void draw(Graphics g){
 		map.draw(g);
-		player.draw(g);	
 		for(Entity entity : entities){
 			entity.draw(g);
 		}

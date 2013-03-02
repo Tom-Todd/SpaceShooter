@@ -15,7 +15,6 @@ public class projectile extends Entity{
 		Double angle = Math.atan2((targetY - y), (targetX - x));
 		velocity.x = (float) (projectileSpeed*Math.cos(angle));
 		velocity.y = (float) (projectileSpeed*Math.sin(angle));
-		System.out.println(velocity.y);
 	}
 
 	public float getProjectileSpeed() {
@@ -45,7 +44,7 @@ public class projectile extends Entity{
 	public void collision(){
 		for(int index = 0;index < world.entities.size(); index++){
 			if(this.hitBox.intersects(world.entities.get(index).getHitBox())){
-				if(!world.entities.get(index).equals(this.Origin)){
+				if(world.entities.get(index).getTeam() != Origin.getTeam()){
 					world.entities.get(index).die();
 					die();
 				}
