@@ -5,8 +5,10 @@ import org.msquirrel.SpaceShooter.TileMap.Tiles.Tile;
 import org.msquirrel.SpaceShooter.TileMap.Tiles.TileGround;
 import org.msquirrel.SpaceShooter.TileMap.Tiles.TileWall;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.util.pathfinding.PathFindingContext;
+import org.newdawn.slick.util.pathfinding.TileBasedMap;
 
-public class Map {
+public class Map implements TileBasedMap{
 	private Tile[][] map;
 	private Camera cam;
 	private static int WIDTH;
@@ -77,5 +79,33 @@ public class Map {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public boolean blocked(PathFindingContext pc, int tx, int ty) {
+		if(map[tx][ty].isBlocked()){
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public float getCost(PathFindingContext pc, int tx, int ty) {
+		return 1;
+	}
+
+	@Override
+	public int getHeightInTiles() {
+		return HEIGHT;
+	}
+
+	@Override
+	public int getWidthInTiles() {
+		return WIDTH;
+	}
+
+	@Override
+	public void pathFinderVisited(int x, int y) {
+		
 	}
 }

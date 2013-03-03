@@ -112,6 +112,14 @@ public class Entity {
 		return alive;
 	}
 	
+	public int getMapPosX(){
+		return (int) x/32;
+	}
+	
+	public int getMapPosY(){
+		return (int) y/32;
+	}
+	
 	public void hit(){
 		
 	}
