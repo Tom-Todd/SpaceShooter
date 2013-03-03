@@ -12,6 +12,7 @@ import org.msquirrel.SpaceShooter.TileMap.Map;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.tiled.TiledMap;
 
 public class World {
 	private static int WORLD_WIDTH;

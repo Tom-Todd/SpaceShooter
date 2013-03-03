@@ -12,8 +12,8 @@ public class TileGround extends Tile{
 	
 	public void draw(Graphics g){
 		g.setColor(Color.gray);
-		g.fillRect(x + cam.getX(), y + cam.getY(), 64, 64);
+		g.fillRect(x + cam.getX(), y + cam.getY(), 32, 32);
 		g.setColor(Color.black);
-		g.drawRect(x + cam.getX(), y + cam.getY(), 64, 64);
+		g.drawRect(x + cam.getX(), y + cam.getY(), 32, 32);
 	}
 }

@@ -11,8 +11,8 @@ public class Tile {
 	
 	public Tile(int x, int y, Camera cam){
 		this.cam = cam;
-		this.x = x*64;
-		this.y = y*64;
+		this.x = x*32;
+		this.y = y*32;
 	}
 	
 	public void draw(Graphics g){
