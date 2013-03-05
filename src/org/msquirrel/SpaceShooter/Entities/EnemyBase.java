@@ -1,5 +1,6 @@
 package org.msquirrel.SpaceShooter.Entities;
 
+import org.msquirrel.SpaceShooter.Camera;
 import org.msquirrel.SpaceShooter.World;
 import org.msquirrel.SpaceShooter.Entities.Projectiles.bullet;
 import org.msquirrel.SpaceShooter.TileMap.Map;
@@ -31,8 +32,8 @@ public class EnemyBase extends Entity implements Mover{
 		this.setTeam(Team.ENEMY_TEAM);
 		this.width = 16;
 		this.height = 16;
-		this.x = (this.getMapPosX()*32)+8;
-		this.y = (this.getMapPosY()*32)+8;
+		this.x = (this.getMapPosX()+8);
+		this.y = (this.getMapPosY()+8);
 		this.nextX = x;
 		this.nextY = y;
 		moved = true;
@@ -41,18 +42,16 @@ public class EnemyBase extends Entity implements Mover{
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException{
-		int difX = this.getMapPosX() - world.getPlayer().getMapPosX();
-		int difY = this.getMapPosY() - world.getPlayer().getMapPosY();
+		int difX = (int) ((this.getMapPosX()/32) - (world.getPlayer().getMapPosX()/map.TILE_SIZE));
+		int difY = (int) ((this.getMapPosY()/32) - (world.getPlayer().getMapPosY()/map.TILE_SIZE));
 		int difXSqr = difX * difX;
 		int difYSqr = difY * difY;
 		plrDistance = (int) Math.sqrt(difXSqr + difYSqr);
-		
 		if(plrDistance < 5){
 			attacking = true;
 		}else{
 			attacking = false;
 		}
-		
 		if(attacking && attackCounter > 10){
 			float guessPlayerPosX = 0;
 			float guessPlayerPosY = 0;
@@ -85,8 +84,8 @@ public class EnemyBase extends Entity implements Mover{
 	public Path getPath(){
 		Map map = world.getMap();
 		AStarPathFinder pathFinder = new AStarPathFinder(map, 100, false);
-		Path path = pathFinder.findPath(null, this.getMapPosX(), this.getMapPosY(), 
-				world.getPlayer().getMapPosX(), world.getPlayer().getMapPosY());
+		Path path = pathFinder.findPath(null, this.getMapTileX(), this.getMapTileY(), 
+			player.getMapTileX(), player.getMapTileY());
 		return path;
 	}
 	
@@ -106,8 +105,8 @@ public class EnemyBase extends Entity implements Mover{
 			velocity.x = (float) (speed*Math.cos(angle));
 			velocity.y = (float) (speed*Math.sin(angle));
 			
-			x += velocity.x;
-			y += velocity.y;
+			x += velocity.x*delta;
+			y += velocity.y*delta;
 			
 			if(this.getHitBox().contains(targetRealX+(width/2), targetRealY+(width/2))){
 				moved = true;

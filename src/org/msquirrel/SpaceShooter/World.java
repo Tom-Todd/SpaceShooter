@@ -27,13 +27,9 @@ public class World {
 	public World() throws SlickException{
 		this.cam = new Camera(0,0);
 		map = new Map(cam);
-		player = new Player(50,100, this, cam);
+		player = new Player(400,300, this, cam);
 		entities.add(player);
-		entities.add(new EnemyBase(250, 250, this, player));
-		entities.add(new EnemyBase(400, 500, this, player));
-		entities.add(new EnemyBase(500, 300, this, player));	
-		entities.add(new EnemyBase(300, 250, this, player));
-		entities.add(new EnemyBase(200, 500, this, player));
+		entities.add(new EnemyBase(500, 300, this, player));
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException{
@@ -73,5 +69,9 @@ public class World {
 		for(projectile p : projectiles){
 			p.draw(g);
 		}
+	}
+
+	public Camera getCam() {
+		return cam;
 	}
 }

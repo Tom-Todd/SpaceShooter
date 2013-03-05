@@ -1,5 +1,6 @@
 package org.msquirrel.SpaceShooter.Entities;
 
+import org.msquirrel.SpaceShooter.Camera;
 import org.msquirrel.SpaceShooter.World;
 import org.msquirrel.SpaceShooter.TileMap.Map;
 import org.newdawn.slick.GameContainer;
@@ -31,6 +32,8 @@ public class Entity {
 	protected World world;
 	protected Rectangle hitBox;
 	protected Image entityImage;
+	protected Camera cam;
+	protected Map map;
 	//Attack
 	protected boolean attacking;
 	
@@ -41,7 +44,10 @@ public class Entity {
 		this.nextX = x;
 		this.nextY = y;
 		this.world = world;
+		this.cam = world.getCam();
+		this.map = world.getMap();
 		this.hitBox = new Rectangle(x,y,10,10);
+		entityImage = new Image("res/Player.png");
 		velocity = new Vector2f();
 	}
 	
@@ -89,8 +95,8 @@ public class Entity {
 			velocity.y = (float) Math.sqrt(((speed*speed)/2));
 		}
 
-		nextX += velocity.x*delta;
-		nextY += velocity.y*delta;
+		nextX += (velocity.x*delta);
+		nextY += (velocity.y*delta);
 		
 		if(!world.getMap().blocked(nextX, nextY, width, height)){
 			x = nextX;
@@ -112,16 +118,20 @@ public class Entity {
 		return alive;
 	}
 	
-	public int getMapPosX(){
-		return (int) x/32;
+	public float getMapPosX(){
+		return x+cam.getX();
 	}
 	
-	public int getMapPosY(){
-		return (int) y/32;
+	public float getMapPosY(){
+		return y+cam.getY();
 	}
 	
-	public void hit(){
-		
+	public int getMapTileX(){
+		return (int) x/map.TILE_SIZE;
+	}
+	
+	public int getMapTileY(){
+		return (int) y/map.TILE_SIZE;
 	}
 	
 	public Team getTeam() {

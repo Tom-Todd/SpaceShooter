@@ -45,46 +45,43 @@ public class Player extends Entity{
 		velocity.x = 0;
 		velocity.y = 0;
 		if(movingRight){
-			velocity.x = speed;
+			velocity.x = -speed;
 		}
 		if(movingLeft){
-			velocity.x = -(speed);
+			velocity.x = (speed);
 		}
 		if(movingUp){
-			velocity.y = -(speed);
+			velocity.y = (speed);
 		}
 		if(movingDown){
-			velocity.y = speed;
+			velocity.y = -speed;
 		}
 		
 		if(movingRight && movingUp){
-			velocity.x = (float) Math.sqrt(((speed*speed)/2));
-			velocity.y = (float) -Math.sqrt(((speed*speed)/2));
+			velocity.x = (float) -Math.sqrt(((speed*speed)/2));
+			velocity.y = (float) Math.sqrt(((speed*speed)/2));
 		}
 		if(movingLeft && movingUp){
-			velocity.x = (float) -Math.sqrt(((speed*speed)/2));
-			velocity.y = (float) -Math.sqrt(((speed*speed)/2));
-		}
-		if(movingRight && movingDown){
 			velocity.x = (float) Math.sqrt(((speed*speed)/2));
 			velocity.y = (float) Math.sqrt(((speed*speed)/2));
 		}
-		if(movingLeft && movingDown){
+		if(movingRight && movingDown){
 			velocity.x = (float) -Math.sqrt(((speed*speed)/2));
-			velocity.y = (float) Math.sqrt(((speed*speed)/2));
+			velocity.y = (float) -Math.sqrt(((speed*speed)/2));
+		}
+		if(movingLeft && movingDown){
+			velocity.x = (float) Math.sqrt(((speed*speed)/2));
+			velocity.y = (float) -Math.sqrt(((speed*speed)/2));
 		}
 
-		nextX += velocity.x*delta;
-		nextY += velocity.y*delta;
+		float curCamx = cam.getX();
+		float curCamy = cam.getY();
+		cam.setX(cam.getX()+velocity.x*delta);
+		cam.setY(cam.getY()+velocity.y*delta);
 		
-		if(!world.getMap().blocked(nextX, nextY, width, height)){
-			x = nextX;
-			y = nextY;
-		}else{
-			x = x;
-			y = y;
-			nextX = x;
-			nextY = y;
+		if(world.getMap().blocked(nextX, nextY, width, height)){
+			cam.setX(curCamx);
+			cam.setY(curCamy);
 		}
 	}
 	

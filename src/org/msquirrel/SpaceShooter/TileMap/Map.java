@@ -3,6 +3,7 @@ package org.msquirrel.SpaceShooter.TileMap;
 import org.msquirrel.SpaceShooter.Camera;
 import org.msquirrel.SpaceShooter.TileMap.Tiles.Tile;
 import org.msquirrel.SpaceShooter.TileMap.Tiles.TileGround;
+import org.msquirrel.SpaceShooter.TileMap.Tiles.TileSpace;
 import org.msquirrel.SpaceShooter.TileMap.Tiles.TileWall;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.util.pathfinding.PathFindingContext;
@@ -13,6 +14,7 @@ public class Map implements TileBasedMap{
 	private Camera cam;
 	private static int WIDTH;
 	private static int HEIGHT;
+	public static int TILE_SIZE = 32;
 	
 	public Map(Camera cam){
 		this.cam = cam;
@@ -27,6 +29,16 @@ public class Map implements TileBasedMap{
 					case 0xFF999999:
 					{
 						map[x][y] = new TileWall(x,y,this.cam);
+					}
+					break;
+					case 0xFF000000:
+					{
+						map[x][y] = new TileSpace(x,y,this.cam);
+					}
+					break;
+					case 0xFF333333:
+					{
+						map[x][y] = new TileDoor(x,y,this.cam);
 					}
 				}
 			}

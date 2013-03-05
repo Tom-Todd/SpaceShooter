@@ -1,5 +1,6 @@
 package org.msquirrel.SpaceShooter.Entities.Projectiles;
 
+import org.msquirrel.SpaceShooter.Camera;
 import org.msquirrel.SpaceShooter.World;
 import org.msquirrel.SpaceShooter.Entities.Entity;
 import org.msquirrel.SpaceShooter.TileMap.Map;
