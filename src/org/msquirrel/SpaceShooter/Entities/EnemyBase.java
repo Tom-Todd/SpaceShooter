@@ -28,12 +28,10 @@ public class EnemyBase extends Entity implements Mover{
 	public EnemyBase(float x, float y, World world, Player player) throws SlickException {
 		super(x, y, world);
 		this.player = player;
-		this.speed = 2f;
+		this.speed = 0.1f;
 		this.setTeam(Team.ENEMY_TEAM);
 		this.width = 16;
 		this.height = 16;
-		this.x = (this.getMapPosX()+8);
-		this.y = (this.getMapPosY()+8);
 		this.nextX = x;
 		this.nextY = y;
 		moved = true;
@@ -91,8 +89,8 @@ public class EnemyBase extends Entity implements Mover{
 	
 	public void move(int delta){
 		//IF PLAYER IN SIGHT
-		if(!(this.getMapPosX() == world.getPlayer().getMapPosX()
-				&& this.getMapPosY() == world.getPlayer().getMapPosY()) && plrDistance < 10){	
+		if(!(this.getMapTileX() == player.getMapTileX()
+				&& this.getMapTileY() == player.getMapTileY()) && plrDistance < 10){	
 			if(moved){
 				CurPath = this.getPath();
 				targetX = CurPath.getX(1);

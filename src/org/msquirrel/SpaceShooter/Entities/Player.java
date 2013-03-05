@@ -12,12 +12,10 @@ import org.newdawn.slick.geom.Rectangle;
 
 public class Player extends Entity{
 	protected int ShootCounter;
-	protected Camera cam;
 	
-	public Player(float x, float y, World world, Camera cam) throws SlickException{
+	public Player(float x, float y, World world) throws SlickException{
 		super(x, y, world);
 		this.setTeam(Team.PLAYER_TEAM);
-		this.cam = cam;
 		this.width = 16;
 		this.height = 16;
 		entityImage = new Image("res/Player.png");
@@ -32,7 +30,7 @@ public class Player extends Entity{
 		movingDown = container.getInput().isKeyDown(Input.KEY_S);
 	
 		if(container.getInput().isMouseButtonDown(0) && ShootCounter > 10){
-			world.projectiles.add(new bullet(this.x, this.y, (float)container.getInput().getMouseX(), (float)container.getInput().getMouseY(), world, this));
+			world.projectiles.add(new bullet(this.x, this.y, (float)container.getInput().getMouseX() - cam.getX(), (float)container.getInput().getMouseY() - cam.getY(), world, this));
 			ShootCounter = 0;
 		}
 		ShootCounter++;
@@ -74,15 +72,24 @@ public class Player extends Entity{
 			velocity.y = (float) -Math.sqrt(((speed*speed)/2));
 		}
 
-		float curCamx = cam.getX();
-		float curCamy = cam.getY();
-		cam.setX(cam.getX()+velocity.x*delta);
-		cam.setY(cam.getY()+velocity.y*delta);
 		
-		if(world.getMap().blocked(nextX, nextY, width, height)){
-			cam.setX(curCamx);
-			cam.setY(curCamy);
+		nextX -= velocity.x*delta;
+		nextY -= velocity.y*delta;
+		
+		if(!map.blocked(nextX, nextY, width, height)){
+			x = nextX;
+			y = nextY;
+			this.cam.setX(this.cam.getX()+velocity.x*delta);
+			this.cam.setY(this.cam.getY()+velocity.y*delta);
+		}else{
+			nextX = x;
+			nextY = y;
 		}
+		
+		
+		
+		
+
 	}
 	
 	@Override

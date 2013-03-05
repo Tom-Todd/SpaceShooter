@@ -13,9 +13,9 @@ public class TileDoor extends Tile {
 	
 	public void draw(Graphics g){
 		g.setColor(Color.blue);
-		g.fillRect(x + cam.getX(), y + cam.getY(), 32, 32);
+		g.fillRect(x, y, 32, 32);
 		g.setColor(Color.black);
-		g.drawRect(x + cam.getX(), y + cam.getY(), 32, 32);
+		g.drawRect(x, y, 32, 32);
 	}
 	
 }

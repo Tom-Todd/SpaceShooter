@@ -9,6 +9,22 @@ public class Camera {
 		this.y = y;
 	}
 	
+	public float getWindowX(float x){
+		return x - this.x;
+	}
+	
+	public float getWindowY(float y){
+		return y - this.y;
+	}
+	
+	public float getWorldX(float x){
+		return x + this.x;
+	}
+	
+	public float getWorldY(float y){
+		return y + this.y;
+	}
+	
 	public float getX() {
 		return x;
 	}

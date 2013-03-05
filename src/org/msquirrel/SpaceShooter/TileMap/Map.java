@@ -54,8 +54,8 @@ public class Map implements TileBasedMap{
 	}
 
 	public boolean blocked(float nextX, float nextY, float width, float height) {
-		int x = (int) (((nextX)-cam.getX())/32);
-		int y = (int) (((nextY)-cam.getY())/32);
+		int x = (int) (((nextX))/32);
+		int y = (int) (((nextY))/32);
 		if(x > -1 && x < WIDTH){
 			if(y > -1 && y < HEIGHT){
 				if(this.map[x][y].isBlocked()){
@@ -63,8 +63,8 @@ public class Map implements TileBasedMap{
 				}
 			}
 		}
-		x = (int) (((nextX+width)-cam.getX())/32);
-		y = (int) (((nextY)-cam.getY())/32);
+		x = (int) (((nextX+width))/32);
+		y = (int) (((nextY))/32);
 		if(x > -1 && x < WIDTH){
 			if(y > -1 && y < HEIGHT){
 				if(this.map[x][y].isBlocked()){
@@ -72,8 +72,8 @@ public class Map implements TileBasedMap{
 				}
 			}
 		}
-		x = (int) (((nextX)-cam.getX())/32);
-		y = (int) (((nextY+height)-cam.getY())/32);
+		x = (int) (((nextX))/32);
+		y = (int) (((nextY+height))/32);
 		if(x > -1 && x < WIDTH){
 			if(y > -1 && y < HEIGHT){
 				if(this.map[x][y].isBlocked()){
@@ -81,8 +81,8 @@ public class Map implements TileBasedMap{
 				}
 			}
 		}
-		x = (int) (((nextX+width)-cam.getX())/32);
-		y = (int) (((nextY+height)-cam.getY())/32);
+		x = (int) (((nextX+width))/32);
+		y = (int) (((nextY+height))/32);
 		if(x > -1 && x < WIDTH){
 			if(y > -1 && y < HEIGHT){
 				if(this.map[x][y].isBlocked()){

@@ -27,7 +27,7 @@ public class World {
 	public World() throws SlickException{
 		this.cam = new Camera(0,0);
 		map = new Map(cam);
-		player = new Player(400,300, this, cam);
+		player = new Player(400,300, this);
 		entities.add(player);
 		entities.add(new EnemyBase(500, 300, this, player));
 	}
@@ -43,6 +43,7 @@ public class World {
 				projectiles.get(i).update(container, delta);
 			}
 		}
+
 	}
 	
 	public void removeEntity(Entity entity){
@@ -62,6 +63,7 @@ public class World {
 	}
 	
 	public void draw(Graphics g){
+		g.translate(cam.getX(), cam.getY());
 		map.draw(g);
 		for(Entity entity : entities){
 			entity.draw(g);
