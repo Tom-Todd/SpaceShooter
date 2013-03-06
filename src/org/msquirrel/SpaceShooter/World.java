@@ -11,6 +11,7 @@ import org.msquirrel.SpaceShooter.Entities.Projectiles.projectile;
 import org.msquirrel.SpaceShooter.TileMap.Map;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
@@ -23,11 +24,13 @@ public class World {
 	private Player player;
 	private Camera cam;
 	private EnemyBase enemy;
+	private Image background;
 	
 	public World() throws SlickException{
 		this.cam = new Camera(0,0);
 		map = new Map(cam);
 		player = new Player(400,300, this);
+		background = new Image("res/background.png");
 		entities.add(player);
 		entities.add(new EnemyBase(500, 300, this, player));
 	}
@@ -63,6 +66,7 @@ public class World {
 	}
 	
 	public void draw(Graphics g){
+		background.draw();
 		g.translate(cam.getX(), cam.getY());
 		map.draw(g);
 		for(Entity entity : entities){

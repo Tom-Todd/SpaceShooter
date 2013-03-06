@@ -3,17 +3,22 @@ package org.msquirrel.SpaceShooter.TileMap.Tiles;
 import org.msquirrel.SpaceShooter.Camera;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 
 public class TileGround extends Tile{
+	private Image tileImage;
 	
-	public TileGround(int x, int y,  Camera cam){
+	public TileGround(int x, int y,  Camera cam) throws SlickException{
 		super(x, y, cam);
+		tileImage = new Image("res/floorTile.png");
 	}
 	
 	public void draw(Graphics g){
-		g.setColor(Color.gray);
+		/*g.setColor(Color.gray);
 		g.fillRect(x, y, 32, 32);
 		g.setColor(Color.black);
-		g.drawRect(x, y, 32, 32);
+		g.drawRect(x, y, 32, 32);*/
+		tileImage.draw(x,y);
 	}
 }

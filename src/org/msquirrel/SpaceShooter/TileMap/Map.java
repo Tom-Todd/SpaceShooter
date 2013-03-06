@@ -6,6 +6,7 @@ import org.msquirrel.SpaceShooter.TileMap.Tiles.TileGround;
 import org.msquirrel.SpaceShooter.TileMap.Tiles.TileSpace;
 import org.msquirrel.SpaceShooter.TileMap.Tiles.TileWall;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.util.pathfinding.PathFindingContext;
 import org.newdawn.slick.util.pathfinding.TileBasedMap;
 
@@ -16,7 +17,7 @@ public class Map implements TileBasedMap{
 	private static int HEIGHT;
 	public static int TILE_SIZE = 32;
 	
-	public Map(Camera cam){
+	public Map(Camera cam) throws SlickException{
 		this.cam = cam;
 		Bitmap loadmap = mapLoader.loadBitmap("res/map.png");
 		WIDTH = loadmap.width;

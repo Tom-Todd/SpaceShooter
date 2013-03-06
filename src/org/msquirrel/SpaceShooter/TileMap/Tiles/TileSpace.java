@@ -11,10 +11,10 @@ public class TileSpace extends Tile{
 	}
 	
 	public void draw(Graphics g){
-		g.setColor(Color.black);
-		g.fillRect(x, y, 32, 32);
-		g.setColor(Color.black);
-		g.drawRect(x, y, 32, 32);
+		//g.setColor(Color.black);
+		//g.fillRect(x, y, 32, 32);
+		//g.setColor(Color.black);
+		//g.drawRect(x, y, 32, 32);
 	}
 
 }
