@@ -7,18 +7,15 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 public class TileGround extends Tile{
-	private Image tileImage;
 	
 	public TileGround(int x, int y,  Camera cam) throws SlickException{
 		super(x, y, cam);
-		tileImage = new Image("res/floorTile.png");
 	}
 	
 	public void draw(Graphics g){
-		/*g.setColor(Color.gray);
+		g.setColor(Color.gray);
 		g.fillRect(x, y, 32, 32);
 		g.setColor(Color.black);
-		g.drawRect(x, y, 32, 32);*/
-		tileImage.draw(x,y);
+		g.drawRect(x, y, 32, 32);
 	}
 }

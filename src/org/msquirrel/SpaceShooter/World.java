@@ -9,6 +9,7 @@ import org.msquirrel.SpaceShooter.Entities.Player;
 import org.msquirrel.SpaceShooter.Entities.Projectiles.bullet;
 import org.msquirrel.SpaceShooter.Entities.Projectiles.projectile;
 import org.msquirrel.SpaceShooter.TileMap.Map;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -25,14 +26,16 @@ public class World {
 	private Camera cam;
 	private EnemyBase enemy;
 	private Image background;
+	private Image lv1Map;
 	
 	public World() throws SlickException{
 		this.cam = new Camera(0,0);
 		map = new Map(cam);
 		player = new Player(400,300, this);
 		background = new Image("res/background.png");
+		lv1Map = new Image("res/lv1Map.png");
 		entities.add(player);
-		entities.add(new EnemyBase(500, 300, this, player));
+		map.addEnemies(this);
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException{
@@ -69,12 +72,18 @@ public class World {
 		background.draw();
 		g.translate(cam.getX(), cam.getY());
 		map.draw(g);
+		lv1Map.draw();
 		for(Entity entity : entities){
 			entity.draw(g);
 		}
 		for(projectile p : projectiles){
 			p.draw(g);
 		}
+		g.setColor(Color.white);
+		g.translate(-cam.getX(), -cam.getY());
+		int enemies = entities.size() -1;
+		String enemyNo = Integer.toString(enemies);
+		g.drawString("Enemies- " + enemyNo, 10, 30);
 	}
 
 	public Camera getCam() {

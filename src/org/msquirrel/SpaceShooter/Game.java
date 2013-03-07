@@ -24,6 +24,7 @@ public class Game extends BasicGame{
 		container.setVSync(true);
 		container.setTargetFrameRate(60);
 		container.setSmoothDeltas(true);
+		container.setUpdateOnlyWhenVisible(true);
 	}
 
 	@Override

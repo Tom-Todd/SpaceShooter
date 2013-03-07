@@ -24,6 +24,8 @@ public class EnemyBase extends Entity implements Mover{
 	protected int targetY;
 	protected int MAX_SIGHT_DISTANCE = 6;
 	protected int plrDistance;
+	private boolean Spotted;
+	private boolean playerVisible;
 	
 	public EnemyBase(float x, float y, World world, Player player) throws SlickException {
 		super(x, y, world);
@@ -45,7 +47,19 @@ public class EnemyBase extends Entity implements Mover{
 		int difXSqr = difX * difX;
 		int difYSqr = difY * difY;
 		plrDistance = (int) Math.sqrt(difXSqr + difYSqr);
-		if(plrDistance < 5){
+		if(RayCasting.tileVisible(this.getMapTileX(), player.getMapTileX(), this.getMapTileY(), player.getMapTileY(), map)){
+			playerVisible = true;
+		}else{
+			playerVisible = false;
+		}
+		if(playerVisible){
+			Spotted = true;
+		}
+		if(!playerVisible && plrDistance > 10){
+			Spotted = false;
+		}
+
+		if(playerVisible && plrDistance < 13){
 			attacking = true;
 		}else{
 			attacking = false;
@@ -90,7 +104,7 @@ public class EnemyBase extends Entity implements Mover{
 	public void move(int delta){
 		//IF PLAYER IN SIGHT
 		if(!(this.getMapTileX() == player.getMapTileX()
-				&& this.getMapTileY() == player.getMapTileY()) && plrDistance < 10){	
+				&& this.getMapTileY() == player.getMapTileY()) && Spotted){	
 			if(moved){
 				CurPath = this.getPath();
 				targetX = CurPath.getX(1);

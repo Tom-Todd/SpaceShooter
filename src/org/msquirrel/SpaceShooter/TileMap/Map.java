@@ -1,6 +1,10 @@
 package org.msquirrel.SpaceShooter.TileMap;
 
+import java.util.Random;
+
 import org.msquirrel.SpaceShooter.Camera;
+import org.msquirrel.SpaceShooter.World;
+import org.msquirrel.SpaceShooter.Entities.EnemyBase;
 import org.msquirrel.SpaceShooter.TileMap.Tiles.Tile;
 import org.msquirrel.SpaceShooter.TileMap.Tiles.TileGround;
 import org.msquirrel.SpaceShooter.TileMap.Tiles.TileSpace;
@@ -11,11 +15,12 @@ import org.newdawn.slick.util.pathfinding.PathFindingContext;
 import org.newdawn.slick.util.pathfinding.TileBasedMap;
 
 public class Map implements TileBasedMap{
-	private Tile[][] map;
+	public Tile[][] map;
 	private Camera cam;
 	private static int WIDTH;
 	private static int HEIGHT;
 	public static int TILE_SIZE = 32;
+	
 	
 	public Map(Camera cam) throws SlickException{
 		this.cam = cam;
@@ -92,6 +97,22 @@ public class Map implements TileBasedMap{
 			}
 		}
 		return false;
+	}
+	
+	public void addEnemies(World world) throws SlickException{
+		for(int x =0; x < getWidthInTiles(); x++){
+			for(int y =0; y < getHeightInTiles(); y++){
+				if(map[x][y] != null){
+					if(map[x][y] instanceof TileGround){
+						Random generator = new Random();
+						int r = generator.nextInt(100);
+						if(r == 1){
+							world.entities.add(new EnemyBase(x*TILE_SIZE, y*TILE_SIZE, world, world.getPlayer()));
+						}
+					}
+				}
+			}
+		}
 	}
 
 	@Override
