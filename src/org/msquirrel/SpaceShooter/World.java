@@ -6,6 +6,7 @@ import java.util.List;
 import org.msquirrel.SpaceShooter.Entities.EnemyBase;
 import org.msquirrel.SpaceShooter.Entities.Entity;
 import org.msquirrel.SpaceShooter.Entities.Player;
+import org.msquirrel.SpaceShooter.Entities.Team;
 import org.msquirrel.SpaceShooter.Entities.Projectiles.bullet;
 import org.msquirrel.SpaceShooter.Entities.Projectiles.projectile;
 import org.msquirrel.SpaceShooter.TileMap.Map;
@@ -26,22 +27,32 @@ public class World {
 	private Camera cam;
 	private EnemyBase enemy;
 	private Image background;
-	private Image lv1Map;
+	private int enemies;
+	private int entityCount;
+	private int Score;
+	private ImageLoader images;
 	
 	public World() throws SlickException{
-		this.cam = new Camera(0,0);
+		this.cam = new Camera(50,200);
+		images = new ImageLoader();
 		map = new Map(cam);
-		player = new Player(400,300, this);
+		player = new Player(400,100, this);
 		background = new Image("res/background.png");
-		lv1Map = new Image("res/lv1Map.png");
 		entities.add(player);
-		map.addEnemies(this);
+		map.addEnemies(this, 20);
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException{
+		enemies = 0;
+		entityCount = entities.size() + projectiles.size();
 		for(int i = 0; i < entities.size();i++){
 			if(entities.get(i) != null){
 				entities.get(i).update(container, delta);
+			}
+		}
+		for(int i = 0; i < entities.size();i++){
+			if(entities.get(i).getTeam() == Team.ENEMY_TEAM){
+				enemies++;
 			}
 		}
 		for(int i = 0; i < projectiles.size();i++){
@@ -49,7 +60,7 @@ public class World {
 				projectiles.get(i).update(container, delta);
 			}
 		}
-
+		cam.update(delta);
 	}
 	
 	public void removeEntity(Entity entity){
@@ -68,11 +79,34 @@ public class World {
 		return player;
 	}
 	
+	public int getEnemies(){
+		return enemies;
+	}
+	
+	public void setEnemies(int enemies){
+		this.enemies = enemies;
+	}
+	
+	public int getScore() {
+		return Score;
+	}
+
+	public void setScore(int score) {
+		Score = score;
+	}
+
+	public ImageLoader getImages() {
+		return images;
+	}
+
+	public void setImages(ImageLoader images) {
+		this.images = images;
+	}
+
 	public void draw(Graphics g){
 		background.draw();
 		g.translate(cam.getX(), cam.getY());
 		map.draw(g);
-		lv1Map.draw();
 		for(Entity entity : entities){
 			entity.draw(g);
 		}
@@ -81,12 +115,28 @@ public class World {
 		}
 		g.setColor(Color.white);
 		g.translate(-cam.getX(), -cam.getY());
-		int enemies = entities.size() -1;
 		String enemyNo = Integer.toString(enemies);
 		g.drawString("Enemies- " + enemyNo, 10, 30);
+		String ec = Integer.toString(entityCount);
+		g.drawString("Entities- " + ec, 10, 50);
 	}
 
 	public Camera getCam() {
 		return cam;
+	}
+
+	public void loadMap() throws SlickException {
+		map.loadMap(map.getCurrentMap()+1);
+		if(map.getCurrentMap() == 1){
+			player.setX(400);
+			player.setY(100);
+			player.setNextX(400);
+			player.setNextY(100);
+			cam.setX(50);
+			cam.setY(200);
+			cam.setNextX(50);
+			cam.setNextY(200);
+			map.addEnemies(this, 30);
+		}
 	}
 }

@@ -7,10 +7,8 @@ public class Tile {
 	protected int x;
 	protected int y;
 	protected boolean Blocked;
-	protected Camera cam;
 	
-	public Tile(int x, int y, Camera cam){
-		this.cam = cam;
+	public Tile(int x, int y){
 		this.x = x*32;
 		this.y = y*32;
 	}

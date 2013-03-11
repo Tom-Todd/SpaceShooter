@@ -47,7 +47,7 @@ public class Entity {
 		this.cam = world.getCam();
 		this.map = world.getMap();
 		this.hitBox = new Rectangle(x,y,10,10);
-		entityImage = new Image("res/Player.png");
+		entityImage = world.getImages().player;
 		velocity = new Vector2f();
 	}
 	
@@ -142,7 +142,7 @@ public class Entity {
 		this.team = team;
 	}
 	
-	public void die(){
+	public void die() throws SlickException{
 		world.entities.remove(this);
 	}
 	
@@ -158,7 +158,22 @@ public class Entity {
 	public void setX(float x) {
 		this.x = x;
 	}
+	
+	public float getNextX() {
+		return nextX;
+	}
 
+	public void setNextX(float nextX) {
+		this.nextX = nextX;
+	}
+
+	public float getNextY() {
+		return nextY;
+	}
+
+	public void setNextY(float nextY) {
+		this.nextY = nextY;
+	}
 
 	public float getY() {
 		return y;
@@ -182,6 +197,13 @@ public class Entity {
 
 	public void setHeight(float height) {
 		this.height = height;
+	}
+
+	public void hit() throws SlickException {
+		
+	}
+	
+	public void collision() throws SlickException{
 	}
 	
 }

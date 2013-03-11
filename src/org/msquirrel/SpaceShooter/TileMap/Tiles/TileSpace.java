@@ -6,8 +6,8 @@ import org.newdawn.slick.Graphics;
 
 public class TileSpace extends Tile{
 
-	public TileSpace(int x, int y, Camera cam) {
-		super(x, y, cam);
+	public TileSpace(int x, int y) {
+		super(x, y);
 	}
 	
 	public void draw(Graphics g){

@@ -8,14 +8,14 @@ import org.newdawn.slick.SlickException;
 
 public class TileGround extends Tile{
 	
-	public TileGround(int x, int y,  Camera cam) throws SlickException{
-		super(x, y, cam);
+	public TileGround(int x, int y) throws SlickException{
+		super(x, y);
 	}
 	
 	public void draw(Graphics g){
-		g.setColor(Color.gray);
+		/*g.setColor(Color.gray);
 		g.fillRect(x, y, 32, 32);
 		g.setColor(Color.black);
-		g.drawRect(x, y, 32, 32);
+		g.drawRect(x, y, 32, 32);*/
 	}
 }

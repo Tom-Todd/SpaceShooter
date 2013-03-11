@@ -3,6 +3,7 @@ package org.msquirrel.SpaceShooter.Entities.Projectiles;
 import org.msquirrel.SpaceShooter.Camera;
 import org.msquirrel.SpaceShooter.World;
 import org.msquirrel.SpaceShooter.Entities.Entity;
+import org.msquirrel.SpaceShooter.Entities.Team;
 import org.msquirrel.SpaceShooter.TileMap.Map;
 import org.newdawn.slick.SlickException;
 
@@ -42,13 +43,18 @@ public class projectile extends Entity{
 		}
 	}
 	
-	public void collision(){
+	@Override
+	public void collision() throws SlickException{
 		for(int index = 0;index < world.entities.size(); index++){
 			if(this.hitBox.intersects(world.entities.get(index).getHitBox())){
-				if(world.entities.get(index).getTeam() != Origin.getTeam()){
-					world.entities.get(index).die();
+				if(world.entities.get(index).getTeam() != Origin.getTeam() && world.entities.get(index).getTeam() != Team.OBJECT){
+					world.entities.get(index).hit();
 					die();
 				}
+			}
+			if(this.hitBox.intersects(world.getPlayer().getShieldCircle()) 
+					&& Origin != world.getPlayer() && world.getPlayer().isShielded()){
+				die();
 			}
 		}
 	}

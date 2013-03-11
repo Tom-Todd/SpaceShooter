@@ -18,7 +18,7 @@ public class bullet extends projectile{
 	}
 	
 	@Override
-	public void update(GameContainer container, int delta){
+	public void update(GameContainer container, int delta) throws SlickException{
 		this.move(delta);
 		if(lifeTime > 50){
 			this.alive = false;

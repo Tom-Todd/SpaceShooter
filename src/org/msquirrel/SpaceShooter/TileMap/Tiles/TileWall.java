@@ -8,15 +8,15 @@ import org.newdawn.slick.SlickException;
 
 public class TileWall extends Tile{
 	
-	public TileWall(int x, int y, Camera cam) throws SlickException{
-		super(x,y, cam);
+	public TileWall(int x, int y) throws SlickException{
+		super(x,y);
 		this.Blocked = true;
 	}
 	
 	public void draw(Graphics g){
-		g.setColor(Color.darkGray);
+		/*g.setColor(Color.darkGray);
 		g.fillRect(x, y, 32, 32);
 		g.setColor(Color.black);
-		g.drawRect(x, y, 32, 32);
+		g.drawRect(x, y, 32, 32);*/
 	}
 }
