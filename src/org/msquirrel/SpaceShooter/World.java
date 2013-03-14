@@ -31,6 +31,11 @@ public class World {
 	private int entityCount;
 	private int Score;
 	private ImageLoader images;
+	private boolean loadingMap;
+	private boolean transitioningOut;
+	private int transitionTimer = 1;
+	private boolean transitioningIn;
+	 
 	
 	public World() throws SlickException{
 		this.cam = new Camera(50,200);
@@ -38,6 +43,7 @@ public class World {
 		map = new Map(cam);
 		player = new Player(400,100, this);
 		background = new Image("res/background.png");
+		background.setFilter(Image.FILTER_NEAREST);
 		entities.add(player);
 		map.addEnemies(this, 20);
 	}
@@ -61,6 +67,9 @@ public class World {
 			}
 		}
 		cam.update(delta);
+		if(loadingMap){
+			loadMap();
+		}
 	}
 	
 	public void removeEntity(Entity entity){
@@ -103,8 +112,17 @@ public class World {
 		this.images = images;
 	}
 
+	public boolean isTransitioningOut() {
+		return transitioningOut;
+	}
+
+	public void setTransitioningOut(boolean transitioningOut) {
+		this.transitioningOut = transitioningOut;
+	}
+
 	public void draw(Graphics g){
 		background.draw();
+		g.scale(cam.getScaleX(), cam.getScaleY());
 		g.translate(cam.getX(), cam.getY());
 		map.draw(g);
 		for(Entity entity : entities){
@@ -113,8 +131,9 @@ public class World {
 		for(projectile p : projectiles){
 			p.draw(g);
 		}
+		
 		g.setColor(Color.white);
-		g.translate(-cam.getX(), -cam.getY());
+		g.resetTransform();
 		String enemyNo = Integer.toString(enemies);
 		g.drawString("Enemies- " + enemyNo, 10, 30);
 		String ec = Integer.toString(entityCount);
@@ -126,17 +145,54 @@ public class World {
 	}
 
 	public void loadMap() throws SlickException {
-		map.loadMap(map.getCurrentMap()+1);
-		if(map.getCurrentMap() == 1){
-			player.setX(400);
-			player.setY(100);
-			player.setNextX(400);
-			player.setNextY(100);
-			cam.setX(50);
-			cam.setY(200);
-			cam.setNextX(50);
-			cam.setNextY(200);
-			map.addEnemies(this, 30);
+		if(transitioningOut){
+			cam.setScaleX(1-(0.01f*transitionTimer));
+			cam.setScaleY(1-(0.01f*transitionTimer));
+			transitionTimer++;
+			if(transitionTimer > 100){
+				transitionTimer = 1;
+				transitioningOut = false;
+			}
+		}
+		
+		if(!transitioningOut && !transitioningIn){
+			map.loadMap(map.getCurrentMap()+1);
+			if(map.getCurrentMap() == 1){
+				for(int i = 0; i < entities.size();i++){
+					if(entities.get(i) != null){
+						entities.get(i).setDifficulty(1);
+					}
+				}
+				player.setX(400);
+				player.setY(100);
+				player.setNextX(400);
+				player.setNextY(100);
+				cam.setX(50);
+				cam.setY(200);
+				cam.setNextX(50);
+				cam.setNextY(200);
+				map.addEnemies(this, 30);
+				transitioningIn = true;
+			}
+		}
+		if(transitioningIn){
+			transitionTimer++;
+			cam.setScaleX(0.01f*transitionTimer);
+			cam.setScaleY(0.01f*transitionTimer);
+			if(transitionTimer > 100){
+				transitionTimer = 1;
+				loadingMap = false;
+				transitioningIn = false;
+			}
 		}
 	}
+
+	public boolean isLoadingMap() {
+		return loadingMap;
+	}
+
+	public void setLoadingMap(boolean loadingMap) {
+		this.loadingMap = loadingMap;
+	}
+	
 }

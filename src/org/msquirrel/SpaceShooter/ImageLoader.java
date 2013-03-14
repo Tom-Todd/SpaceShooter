@@ -18,6 +18,13 @@ public class ImageLoader {
 		Shield = new Image("res/playerShield.png");
 		Bullet = new Image("res/bullet.png");
 		Key = new Image("res/key.png");
+		
+		player.setFilter(Image.FILTER_NEAREST);
+		enemy.setFilter(Image.FILTER_NEAREST);
+		ShieldPickup.setFilter(Image.FILTER_NEAREST);
+		Shield.setFilter(Image.FILTER_NEAREST);
+		Bullet.setFilter(Image.FILTER_NEAREST);
+		Key.setFilter(Image.FILTER_NEAREST);
 	}
 	
 }

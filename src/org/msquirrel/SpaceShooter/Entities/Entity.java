@@ -36,6 +36,7 @@ public class Entity {
 	protected Map map;
 	//Attack
 	protected boolean attacking;
+	protected int difficulty;
 	
 	
 	public Entity(float x, float y, World world) throws SlickException{
@@ -204,6 +205,13 @@ public class Entity {
 	}
 	
 	public void collision() throws SlickException{
+	}
+	public int getDifficulty() {
+		return difficulty;
+	}
+
+	public void setDifficulty(int difficulty) {
+		this.difficulty = difficulty;
 	}
 	
 }

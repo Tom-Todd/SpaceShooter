@@ -43,7 +43,7 @@ public class Player extends Entity{
 		movingLeft = container.getInput().isKeyDown(Input.KEY_A);	
 		movingDown = container.getInput().isKeyDown(Input.KEY_S);
 	
-		if(container.getInput().isMouseButtonDown(0) && ShootCounter > 10){
+		if(container.getInput().isMouseButtonDown(0) && ShootCounter > 10 && !world.isLoadingMap()){
 			world.projectiles.add(new bullet(this.x, this.y, (float)container.getInput().getMouseX() - cam.getX(), (float)container.getInput().getMouseY() - cam.getY(), world, this));
 			ShootCounter = 0;
 		}
@@ -66,7 +66,9 @@ public class Player extends Entity{
 			shielded = false;
 		}
 		
-		this.move(delta);
+		if(!world.isLoadingMap()){
+			this.move(delta);
+		}
 		setHitBox(x, y, entityImage.getWidth(), entityImage.getHeight());
 		ShieldCircle.setLocation(x-23, y-23);
 
@@ -77,7 +79,8 @@ public class Player extends Entity{
 		}
 		
 		if(map.map[this.getMapTileX()][this.getMapTileY()] instanceof TileExit){
-			world.loadMap();
+			world.setLoadingMap(true);
+			world.setTransitioningOut(true);
 		}
 	}
 	

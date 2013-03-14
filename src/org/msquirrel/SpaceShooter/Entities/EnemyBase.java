@@ -29,7 +29,6 @@ public class EnemyBase extends Entity implements Mover{
 	protected int attackTime;
 	protected boolean Spotted;
 	protected boolean playerVisible;
-	protected int difficulty;
 	
 	public EnemyBase(float x, float y, World world, Player player) throws SlickException {
 		super(x, y, world);
@@ -80,8 +79,18 @@ public class EnemyBase extends Entity implements Mover{
 					guessPlayerPosY = (player.y - velocity.y*delta) + accuracy.nextInt(20)+10;
 				}
 				if(accuracy.nextInt(2) == 1){
-					guessPlayerPosX = player.x - accuracy.nextInt(20)+10;
-					guessPlayerPosY = player.y - accuracy.nextInt(20)+10;
+					guessPlayerPosX = (player.x - velocity.x*delta) - accuracy.nextInt(20)+10;
+					guessPlayerPosY = (player.y - velocity.y*delta) - accuracy.nextInt(20)+10;
+				}
+			}
+			if(difficulty == 1){
+				if(accuracy.nextInt(2) == 0){
+					guessPlayerPosX = (player.x - velocity.x*delta) + accuracy.nextInt(10);
+					guessPlayerPosY = (player.y - velocity.y*delta) + accuracy.nextInt(10);
+				}
+				if(accuracy.nextInt(2) == 1){
+					guessPlayerPosX = (player.x - velocity.x*delta) - accuracy.nextInt(10);
+					guessPlayerPosY = (player.y - velocity.y*delta) - accuracy.nextInt(10);
 				}
 			}
 			

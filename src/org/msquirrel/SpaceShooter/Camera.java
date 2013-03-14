@@ -5,6 +5,8 @@ public class Camera {
 	private float y;
 	private float nextX;
 	private float nextY;
+	private float scaleX = 1;
+	private float scaleY = 1;
 	
 	public Camera(float x, float y){
 		this.x = x;
@@ -56,5 +58,20 @@ public class Camera {
 	public void setNextY(float nextY) {
 		this.nextY = nextY;
 	}
-	
+
+	public float getScaleX() {
+		return scaleX;
+	}
+
+	public void setScaleX(float scaleX) {
+		this.scaleX = scaleX;
+	}
+
+	public float getScaleY() {
+		return scaleY;
+	}
+
+	public void setScaleY(float scaleY) {
+		this.scaleY = scaleY;
+	}
 }

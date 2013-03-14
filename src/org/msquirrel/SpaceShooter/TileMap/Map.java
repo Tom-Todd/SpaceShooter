@@ -26,10 +26,12 @@ public class Map implements TileBasedMap{
 	public static int TILE_SIZE = 32;
 	private Image mapImage;
 	private int currentMap;
+	private Image doorImage;
 	
 	public Map(Camera cam) throws SlickException{
 		this.cam = cam;
-		loadMap(1);
+		doorImage = new Image("res/Door.png");
+		loadMap(0);
 	}
 	
 	public void loadMap(int mapNumber) throws SlickException{
@@ -64,7 +66,7 @@ public class Map implements TileBasedMap{
 					break;
 					case 0xFF333333:
 					{
-						map[x][y] = new TileDoor(x,y);
+						map[x][y] = new TileDoor(x, y, doorImage);
 					}
 					break;
 					case 0xFFFF6699:
@@ -82,12 +84,12 @@ public class Map implements TileBasedMap{
 	}
 	
 	public void draw(Graphics g){
+		mapImage.draw();
 		for(int x = 0;x < WIDTH; x++){
 			for(int y = 0;y < HEIGHT; y++){
 				map[x][y].draw(g);
 			}
 		}
-		mapImage.draw();
 	}
 	
 	public boolean blocked(float nextX, float nextY, float width, float height) {
@@ -132,12 +134,12 @@ public class Map implements TileBasedMap{
 	
 	public void addEnemies(World world, int enemyNumber) throws SlickException{
 		while(world.getEnemies() < enemyNumber){
-			for(int x =0; x < getWidthInTiles(); x++){
-				for(int y =0; y < getHeightInTiles(); y++){
+			for(int x = getWidthInTiles()-1; x > 1; x--){
+				for(int y = getHeightInTiles()-1; y > 1; y--){
 					if(map[x][y] != null){
 						if(map[x][y] instanceof TileGround){
 							Random generator = new Random();
-							int r = generator.nextInt(50);
+							int r = generator.nextInt(100);
 							if(r == 1){
 								if(world.getEnemies() < enemyNumber){
 									world.entities.add(new EnemyBase(x*TILE_SIZE, y*TILE_SIZE, world, world.getPlayer()));
@@ -150,7 +152,6 @@ public class Map implements TileBasedMap{
 				}
 			}
 		}
-		//world.entities.add(new EnemyBase(10*TILE_SIZE, 10*TILE_SIZE, world, world.getPlayer()));
 	}
 	
 	public void openDoors(){
