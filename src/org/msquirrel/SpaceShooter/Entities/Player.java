@@ -42,42 +42,43 @@ public class Player extends Entity{
 		movingRight = container.getInput().isKeyDown(Input.KEY_D);
 		movingLeft = container.getInput().isKeyDown(Input.KEY_A);	
 		movingDown = container.getInput().isKeyDown(Input.KEY_S);
-		if(container.getInput().isKeyDown(Input.KEY_E)){
-			shielded = true;
-		}else{
-			shielded = false;
-		}
-	
-		if(container.getInput().isMouseButtonDown(0) && ShootCounter > 10 && !world.isLoadingMap()){
-			world.projectiles.add(new bullet(this.x, this.y, (float)container.getInput().getMouseX() - cam.getX(), (float)container.getInput().getMouseY() - cam.getY(), world, this));
-			ShootCounter = 0;
-		}
-		ShootCounter++;
-		
-		if(shielded && !(ShieldCounter <= 0)){
-			ShieldCounter--;
-		}
-		if(ShieldCounter <= 0){
-			shielded = false;
-		}
-		
 		if(!world.isLoadingMap()){
-			this.move(delta);
+			if(container.getInput().isMouseButtonDown(1)){
+				shielded = true;
+			}else{
+				shielded = false;
+			}
+			if(container.getInput().isMouseButtonDown(0) && ShootCounter > 10){
+				world.projectiles.add(new bullet(this.x, this.y, (float)container.getInput().getMouseX() - cam.getX(), (float)container.getInput().getMouseY() - cam.getY(), world, this));
+				ShootCounter = 0;
+			}
+			ShootCounter++;
+			
+			if(shielded && !(ShieldCounter <= 0)){
+				ShieldCounter--;
+			}
+			if(ShieldCounter <= 0){
+				shielded = false;
+			}
+			
+			if(!world.isLoadingMap()){
+				this.move(delta);
+			}
+			setHitBox(x, y, entityImage.getWidth(), entityImage.getHeight());
+			ShieldCircle.setLocation(x-23, y-23);
+	
+			if(map.map[this.getMapTileX()][this.getMapTileY()] instanceof TileSafeZone){
+				this.inSafeZone = true;
+			}else{
+				this.inSafeZone = false;
+			}
+			
+			if(map.map[this.getMapTileX()][this.getMapTileY()] instanceof TileExit){
+				world.setLoadingMap(true);
+				world.setTransitioningOut(true);
+			}
+			System.out.println(ShieldCounter);
 		}
-		setHitBox(x, y, entityImage.getWidth(), entityImage.getHeight());
-		ShieldCircle.setLocation(x-23, y-23);
-
-		if(map.map[this.getMapTileX()][this.getMapTileY()] instanceof TileSafeZone){
-			this.inSafeZone = true;
-		}else{
-			this.inSafeZone = false;
-		}
-		
-		if(map.map[this.getMapTileX()][this.getMapTileY()] instanceof TileExit){
-			world.setLoadingMap(true);
-			world.setTransitioningOut(true);
-		}
-		System.out.println(ShieldCounter);
 	}
 	
 	@Override

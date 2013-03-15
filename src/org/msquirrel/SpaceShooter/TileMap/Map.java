@@ -1,5 +1,6 @@
 package org.msquirrel.SpaceShooter.TileMap;
 
+import java.io.IOException;
 import java.util.Random;
 
 import org.msquirrel.SpaceShooter.Camera;
@@ -142,7 +143,11 @@ public class Map implements TileBasedMap{
 							int r = generator.nextInt(100);
 							if(r == 1){
 								if(world.getEnemies() < enemyNumber){
-									world.entities.add(new EnemyBase(x*TILE_SIZE, y*TILE_SIZE, world, world.getPlayer()));
+									try {
+										world.entities.add(new EnemyBase(x*TILE_SIZE, y*TILE_SIZE, world, world.getPlayer()));
+									} catch (IOException e) {
+										e.printStackTrace();
+									}
 									world.setEnemies(world.getEnemies()+1);
 								}
 							}

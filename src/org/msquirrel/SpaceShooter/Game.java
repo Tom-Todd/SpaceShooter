@@ -8,6 +8,7 @@ import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
@@ -18,6 +19,9 @@ public class Game extends BasicGame{
 	private boolean loading = true;
 	private int loadCounter;
 	private int lastScore;
+	private Image ShieldBarSheet;
+	private Image ShieldBarFull;
+	private Image ShieldBarEmpty;
 	
 	public Game(String title) {
 		super(title);
@@ -26,10 +30,12 @@ public class Game extends BasicGame{
 	@Override
 	public void init(GameContainer container) throws SlickException {
 		world = new World();
+		this.ShieldBarSheet = new Image("res/ShieldBar.png");
+		this.ShieldBarFull = ShieldBarSheet.getSubImage(0, 0, ShieldBarSheet.getWidth(), ShieldBarSheet.getHeight()/2);
+		this.ShieldBarEmpty = ShieldBarSheet.getSubImage(0, 24, 332, 21);
 		container.setVSync(true);
 		container.setTargetFrameRate(60);
 		container.setSmoothDeltas(true);
-		//container.setFullscreen(true);
 		container.setUpdateOnlyWhenVisible(true);
 	}
 
@@ -52,6 +58,8 @@ public class Game extends BasicGame{
 				restart();
 			}
 		}
+		int r = (int)  (3.32*(world.getPlayer().getShieldCounter()/5));
+		ShieldBarFull = ShieldBarSheet.getSubImage(0, 0, r, 21);
 	}
 	
 	public void restart() throws SlickException{
@@ -65,6 +73,8 @@ public class Game extends BasicGame{
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		world.draw(g);
+		ShieldBarEmpty.draw(450, 10);
+		ShieldBarFull.draw(450, 10);
 		if(loading){
 			String score = Integer.toString(lastScore);
 			g.setColor(Color.black);

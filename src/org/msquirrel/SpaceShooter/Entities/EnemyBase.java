@@ -1,5 +1,7 @@
 package org.msquirrel.SpaceShooter.Entities;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 
 import org.msquirrel.SpaceShooter.Camera;
@@ -11,6 +13,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.particles.ConfigurableEmitter;
+import org.newdawn.slick.particles.ParticleIO;
 import org.newdawn.slick.util.pathfinding.AStarPathFinder;
 import org.newdawn.slick.util.pathfinding.Mover;
 import org.newdawn.slick.util.pathfinding.Path;
@@ -30,7 +34,7 @@ public class EnemyBase extends Entity implements Mover{
 	protected boolean Spotted;
 	protected boolean playerVisible;
 	
-	public EnemyBase(float x, float y, World world, Player player) throws SlickException {
+	public EnemyBase(float x, float y, World world, Player player) throws SlickException, IOException {
 		super(x, y, world);
 		this.player = player;
 		this.speed = 0.1f;
@@ -63,7 +67,7 @@ public class EnemyBase extends Entity implements Mover{
 			Spotted = false;
 		}
 
-		if(playerVisible && plrDistance < 12 && !player.isInSafeZone()){
+		if(playerVisible && plrDistance < 12 && !player.isInSafeZone() && difX < 10 && difY < 6){
 			attacking = true;
 		}else{
 			attacking = false;

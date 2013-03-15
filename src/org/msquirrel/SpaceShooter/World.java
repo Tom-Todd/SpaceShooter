@@ -1,5 +1,7 @@
 package org.msquirrel.SpaceShooter;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -16,6 +18,9 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.particles.ConfigurableEmitter;
+import org.newdawn.slick.particles.ParticleIO;
+import org.newdawn.slick.particles.ParticleSystem;
 import org.newdawn.slick.tiled.TiledMap;
 
 public class World {
@@ -126,7 +131,6 @@ public class World {
 		g.scale(cam.getScaleX(), cam.getScaleY());
 		g.translate(cam.getX(), cam.getY());
 		map.draw(g);
-		
 		for(Entity entity : entities){
 			entity.draw(g);
 		}
@@ -139,6 +143,7 @@ public class World {
 		g.drawString("Enemies- " + enemyNo, 10, 30);
 		String ec = Integer.toString(entityCount);
 		g.drawString("Entities- " + ec, 10, 50);
+		
 	}
 
 	public Camera getCam() {
