@@ -174,7 +174,9 @@ public class Player extends Entity{
 		entityImage.setColor(3, 0, 1, 0);
 		g.setColor(Color.black);
 		if(this.shielded){
+			g.setDrawMode(g.MODE_ADD_ALPHA);
 			Shield.draw(x-(24*ShieldScale), y-(24*ShieldScale), ShieldScale);
+			g.setDrawMode(g.MODE_NORMAL);
 		}
 		g.draw(hitBox);
 	}

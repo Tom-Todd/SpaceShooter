@@ -6,9 +6,10 @@ import org.msquirrel.SpaceShooter.Entities.Entity;
 import org.newdawn.slick.SlickException;
 
 public class Effect extends Entity{
-
-	public Effect(float x, float y, World world) throws SlickException {
+	protected Entity parent;
+	public Effect(float x, float y, World world,Entity parent) throws SlickException {
 		super(x, y, world);
+		this.parent = parent;
 	}
 	
 }

@@ -61,6 +61,7 @@ public class projectile extends Entity{
 	
 	@Override
 	public void die(){
+		this.alive = false;
 		world.projectiles.remove(this);
 	}
 }

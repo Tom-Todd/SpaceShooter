@@ -2,6 +2,7 @@ package org.msquirrel.SpaceShooter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.msquirrel.SpaceShooter.Entities.EnemyBase;
 import org.msquirrel.SpaceShooter.Entities.Entity;
@@ -125,13 +126,13 @@ public class World {
 		g.scale(cam.getScaleX(), cam.getScaleY());
 		g.translate(cam.getX(), cam.getY());
 		map.draw(g);
+		
 		for(Entity entity : entities){
 			entity.draw(g);
 		}
 		for(projectile p : projectiles){
 			p.draw(g);
 		}
-		
 		g.setColor(Color.white);
 		g.resetTransform();
 		String enemyNo = Integer.toString(enemies);

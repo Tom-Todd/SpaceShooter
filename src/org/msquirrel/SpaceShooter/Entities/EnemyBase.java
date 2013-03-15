@@ -187,6 +187,7 @@ public class EnemyBase extends Entity implements Mover{
 	@Override
 	public void die() throws SlickException{
 		Random generator = new Random();
+		this.alive = false;
 		if(world.getEnemies() == 1){
 			world.addEntity(new key(this.x, this.y, world));
 		}

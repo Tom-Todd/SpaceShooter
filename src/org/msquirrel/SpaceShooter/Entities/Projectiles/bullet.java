@@ -3,6 +3,7 @@ package org.msquirrel.SpaceShooter.Entities.Projectiles;
 import org.msquirrel.SpaceShooter.Camera;
 import org.msquirrel.SpaceShooter.World;
 import org.msquirrel.SpaceShooter.Entities.Entity;
+import org.msquirrel.SpaceShooter.Entities.Effects.Glow;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -15,6 +16,7 @@ public class bullet extends projectile{
 		this.entityImage = new Image("res/bullet.png");
 		this.width = 8;
 		this.height = 8;
+		world.entities.add(new Glow(x, y, world, this));
 	}
 	
 	@Override

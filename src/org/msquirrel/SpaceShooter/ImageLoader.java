@@ -10,6 +10,7 @@ public class ImageLoader {
 	public Image Bullet;
 	public Image Key;
 	public Image enemy;
+	public Image glow;
 	
 	public ImageLoader() throws SlickException{
 		player = new Image("res/Player.png");
@@ -18,6 +19,7 @@ public class ImageLoader {
 		Shield = new Image("res/playerShield.png");
 		Bullet = new Image("res/bullet.png");
 		Key = new Image("res/key.png");
+		glow = new Image("res/glow.png");
 		
 		player.setFilter(Image.FILTER_NEAREST);
 		enemy.setFilter(Image.FILTER_NEAREST);
