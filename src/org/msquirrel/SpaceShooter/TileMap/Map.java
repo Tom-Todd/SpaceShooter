@@ -29,10 +29,11 @@ public class Map implements TileBasedMap{
 	private int currentMap;
 	private Image doorImage;
 	
-	public Map(Camera cam) throws SlickException{
+	public Map(Camera cam, int Map) throws SlickException{
 		this.cam = cam;
 		doorImage = new Image("res/Door.png");
-		loadMap(0);
+		this.currentMap = Map;
+		loadMap(currentMap);
 	}
 	
 	public void loadMap(int mapNumber) throws SlickException{

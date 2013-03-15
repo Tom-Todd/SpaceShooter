@@ -114,7 +114,9 @@ public class Entity {
 	
 	public void draw(Graphics g){
 		entityImage.draw(x,y);
-		g.draw(hitBox);
+		if(world.isDebugging()){
+			g.draw(hitBox);
+		}
 	}
 
 	public boolean isAlive() {

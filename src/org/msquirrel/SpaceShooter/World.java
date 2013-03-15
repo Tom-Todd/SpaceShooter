@@ -39,14 +39,14 @@ public class World {
 	private ImageLoader images;
 	private boolean loadingMap;
 	private boolean transitioningOut;
-	private int transitionTimer = 1;
 	private boolean transitioningIn;
-	 
+	private int transitionTimer = 1;
+	private boolean debugging;
 	
-	public World() throws SlickException{
+	public World(int Map) throws SlickException{
 		this.cam = new Camera(50,200);
 		images = new ImageLoader();
-		map = new Map(cam);
+		map = new Map(cam, Map);
 		player = new Player(400,100, this);
 		background = new Image("res/background.png");
 		background.setFilter(Image.FILTER_NEAREST);
@@ -74,58 +74,9 @@ public class World {
 		}
 		cam.update(delta);
 		if(loadingMap){
-			loadMap();
+			loadMap(map.getCurrentMap()+1);
 		}
 	}
-	
-	public void removeEntity(Entity entity){
-		entities.remove(entity);
-	}
-	
-	public void addEntity(Entity entity){
-		entities.add(entity);
-	}
-	
-	public Map getMap(){
-		return map;
-	}
-	
-	public Player getPlayer(){
-		return player;
-	}
-	
-	public int getEnemies(){
-		return enemies;
-	}
-	
-	public void setEnemies(int enemies){
-		this.enemies = enemies;
-	}
-	
-	public int getScore() {
-		return Score;
-	}
-
-	public void setScore(int score) {
-		Score = score;
-	}
-
-	public ImageLoader getImages() {
-		return images;
-	}
-
-	public void setImages(ImageLoader images) {
-		this.images = images;
-	}
-
-	public boolean isTransitioningOut() {
-		return transitioningOut;
-	}
-
-	public void setTransitioningOut(boolean transitioningOut) {
-		this.transitioningOut = transitioningOut;
-	}
-
 	public void draw(Graphics g){
 		background.draw();
 		g.scale(cam.getScaleX(), cam.getScaleY());
@@ -146,11 +97,7 @@ public class World {
 		
 	}
 
-	public Camera getCam() {
-		return cam;
-	}
-
-	public void loadMap() throws SlickException {
+	public void loadMap(int Map) throws SlickException {
 		if(transitioningOut){
 			cam.setScaleX(1-(0.01f*transitionTimer));
 			cam.setScaleY(1-(0.01f*transitionTimer));
@@ -162,7 +109,7 @@ public class World {
 		}
 		
 		if(!transitioningOut && !transitioningIn){
-			map.loadMap(map.getCurrentMap()+1);
+			map.loadMap(Map);
 			if(map.getCurrentMap() == 1){
 				for(int i = 0; i < entities.size();i++){
 					if(entities.get(i) != null){
@@ -192,13 +139,57 @@ public class World {
 			}
 		}
 	}
-
+	
+	public void removeEntity(Entity entity){
+		entities.remove(entity);
+	}
+	public void addEntity(Entity entity){
+		entities.add(entity);
+	}
+	public Map getMap(){
+		return map;
+	}
+	public Player getPlayer(){
+		return player;
+	}
+	public int getEnemies(){
+		return enemies;
+	}
+	public void setEnemies(int enemies){
+		this.enemies = enemies;
+	}
+	public int getScore() {
+		return Score;
+	}
+	public void setScore(int score) {
+		Score = score;
+	}
+	public ImageLoader getImages() {
+		return images;
+	}
+	public void setImages(ImageLoader images) {
+		this.images = images;
+	}
+	public boolean isTransitioningOut() {
+		return transitioningOut;
+	}
+	public void setTransitioningOut(boolean transitioningOut) {
+		this.transitioningOut = transitioningOut;
+	}
 	public boolean isLoadingMap() {
 		return loadingMap;
 	}
-
 	public void setLoadingMap(boolean loadingMap) {
 		this.loadingMap = loadingMap;
+	}
+	public Camera getCam() {
+		return cam;
+	}
+	public boolean isDebugging() {
+		return debugging;
+	}
+	public void setDebugging(boolean debugging) {
+		this.debugging = debugging;
 	}
 	
 }

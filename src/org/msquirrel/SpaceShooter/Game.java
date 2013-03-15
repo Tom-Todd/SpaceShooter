@@ -10,18 +10,22 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 
 
 public class Game extends BasicGame{
 	private World world;
-	private boolean started = false;
+	private boolean started = true;
 	private boolean loading = true;
 	private int loadCounter;
 	private int lastScore;
 	private Image ShieldBarSheet;
 	private Image ShieldBarFull;
 	private Image ShieldBarEmpty;
+	private boolean restarted;
+	private Player player;
+	private Music inGame;
 	
 	public Game(String title) {
 		super(title);
@@ -29,7 +33,7 @@ public class Game extends BasicGame{
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
-		world = new World();
+		world = new World(0);
 		this.ShieldBarSheet = new Image("res/ShieldBar.png");
 		this.ShieldBarFull = ShieldBarSheet.getSubImage(0, 0, ShieldBarSheet.getWidth(), ShieldBarSheet.getHeight()/2);
 		this.ShieldBarEmpty = ShieldBarSheet.getSubImage(0, 24, 332, 21);
@@ -37,6 +41,9 @@ public class Game extends BasicGame{
 		container.setTargetFrameRate(60);
 		container.setSmoothDeltas(true);
 		container.setUpdateOnlyWhenVisible(true);
+		inGame = new Music("res/inGame.wav");
+		container.setMusicVolume(0.5f);
+		inGame.play();
 	}
 
 	@Override
@@ -44,32 +51,39 @@ public class Game extends BasicGame{
 		if(container.getInput().isKeyPressed(Input.KEY_ESCAPE)){
 			container.destroy();
 		}
-		if(!started){
-			loading = true;
+		if(container.getInput().isKeyPressed(Input.KEY_F1)){
+			world.setDebugging(!world.isDebugging());
+		}
+		if(this.loading){
+			if(!restarted){
+				restart();
+			}
 			loadCounter++;
-			if(loadCounter > 100){
-				started = true;
+			if(loadCounter > 70){
+				loadCounter = 0;
 				loading = false;
 			}
 		}
-		if(started){
+		if(started && !loading){
+			restarted = false;
 			world.update(container, delta);
 			if(!world.getPlayer().isAlive()){
-				restart();
+				this.loading = true;
 			}
 		}
-		int r = (int)  (3.32*(world.getPlayer().getShieldCounter()/5));
+		int r = (int)  (3.32*(world.getPlayer().getShieldCounter()/3));
 		ShieldBarFull = ShieldBarSheet.getSubImage(0, 0, r, 21);
 	}
 	
 	public void restart() throws SlickException{
-		this.lastScore = world.getScore();
-		world = new World();
-		loadCounter = 0;
-		started = false;
-		loading = true;
+		lastScore = world.getScore();
+		System.out.println(lastScore);
+		int shieldLife = world.getPlayer().getShieldCounter();
+		world = new World(world.getMap().getCurrentMap());
+		world.getPlayer().setShieldCounter(shieldLife);
+		restarted = true;
 	}
-	
+
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		world.draw(g);

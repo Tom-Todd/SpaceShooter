@@ -17,10 +17,10 @@ public class Shield extends PickUp{
 	@Override
 	public void collision() throws SlickException{
 		if(this.hitBox.intersects(world.getPlayer().getHitBox())){
-			if(world.getPlayer().getShieldCounter() < 500 && world.getPlayer().getShieldCounter()+50 < 500){
+			if(world.getPlayer().getShieldCounter() < 500 && world.getPlayer().getShieldCounter()+50 < 300){
 				world.getPlayer().setShieldCounter(world.getPlayer().getShieldCounter()+50);
 			}else{
-				world.getPlayer().setShieldCounter(500);
+				world.getPlayer().setShieldCounter(300);
 			}
 			this.die();
 		}

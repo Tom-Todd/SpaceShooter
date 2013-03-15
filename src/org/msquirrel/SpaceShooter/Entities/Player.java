@@ -22,7 +22,7 @@ public class Player extends Entity{
 	protected Image Shield;
 	protected Circle ShieldCircle;
 	protected float ShieldScale = 1;
-	protected int ShieldCounter = 500;
+	protected int ShieldCounter = 300;
 	protected boolean growing = true;
 	
 	public Player(float x, float y, World world) throws SlickException{
@@ -159,6 +159,12 @@ public class Player extends Entity{
 		if(!shielded){
 			this.die();
 		}
+		if(shielded){
+			this.ShieldCounter -= 20;
+			if(this.ShieldCounter < 0){
+				ShieldCounter = 0;
+			}
+		}
 	}
 	
 	@Override
@@ -175,7 +181,12 @@ public class Player extends Entity{
 			Shield.draw(x-(24*ShieldScale), y-(24*ShieldScale), ShieldScale);
 			g.setDrawMode(g.MODE_NORMAL);
 		}
-		g.draw(hitBox);
+		if(world.isDebugging()){
+			g.draw(hitBox);
+			if(shielded){
+				g.draw(ShieldCircle);
+			}
+		}
 	}
 	
 	public boolean isInSafeZone() {

@@ -195,7 +195,7 @@ public class EnemyBase extends Entity implements Mover{
 		if(world.getEnemies() == 1){
 			world.addEntity(new key(this.x, this.y, world));
 		}
-		if(generator.nextInt(7) == 1){
+		if(generator.nextInt(5) == 1 && !(world.getEnemies() == 1)){
 			world.addEntity(new Shield(this.x, this.y, world));
 		}
 		world.setScore(world.getScore()+1);
@@ -208,16 +208,18 @@ public class EnemyBase extends Entity implements Mover{
 	
 	@Override
 	public void draw(Graphics g){
-		if(CurPath != null){
-			for (int l = 0; l < CurPath.getLength(); l++){
-				//g.drawRect(CurPath.getX(l)*32, CurPath.getY(l)*32, 5, 5);
-			}
-		}
 		entityImage.setColor(0, 1, 1, 1);
 		entityImage.setColor(1, 1, 1, 1);
 		entityImage.setColor(2, 1, 1, 1);
 		entityImage.setColor(3, 1, 1, 1);
 		entityImage.draw(x,y);
-		g.draw(hitBox);
+		if(world.isDebugging()){
+			if(CurPath != null){
+				for (int l = 0; l < CurPath.getLength(); l++){
+					g.drawRect(CurPath.getX(l)*32, CurPath.getY(l)*32, 5, 5);
+				}
+			}
+			g.draw(hitBox);
+		}
 	}
 }
