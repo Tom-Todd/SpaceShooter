@@ -2,6 +2,7 @@ package org.msquirrel.SpaceShooter.Entities;
 
 import org.msquirrel.SpaceShooter.Camera;
 import org.msquirrel.SpaceShooter.World;
+import org.msquirrel.SpaceShooter.Entities.Effects.Effect;
 import org.msquirrel.SpaceShooter.TileMap.Map;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -34,6 +35,7 @@ public class Entity {
 	protected Image entityImage;
 	protected Camera cam;
 	protected Map map;
+	protected Effect effect;
 	//Attack
 	protected boolean attacking;
 	protected int difficulty;
@@ -212,6 +214,12 @@ public class Entity {
 
 	public void setDifficulty(int difficulty) {
 		this.difficulty = difficulty;
+	}
+	public Effect getEffect() {
+		return effect;
+	}
+	public void setEffect(Effect effect) {
+		this.effect = effect;
 	}
 	
 }

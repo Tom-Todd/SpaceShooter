@@ -22,11 +22,11 @@ public class Glow extends Effect{
 	@Override
 	public void update(GameContainer gc, int delta) throws SlickException{
 		Random colour = new Random();
-		this.x = parent.getX()-(parent.getWidth());
-		this.y = parent.getY()-(parent.getHeight());
-		float r = (colour.nextInt(11))/10;
-		float gr = (colour.nextInt(11))/10;
-		float b = (colour.nextInt(11))/10;
+		//this.x = parent.getX()-(parent.getWidth());
+		//this.y = parent.getY()-(parent.getHeight());
+		float r = (colour.nextInt(11)+5)/10;
+		float gr = (colour.nextInt(11)+5)/10;
+		float b = (colour.nextInt(11)+5)/10;
 		this.entityImage.setColor(0, r, gr, b);
 		this.entityImage.setColor(1, r, gr, b);
 		this.entityImage.setColor(2, r, gr, b);
@@ -44,7 +44,7 @@ public class Glow extends Effect{
 	@Override
 	public void draw(Graphics g){
 		g.setDrawMode(g.MODE_ADD_ALPHA);
-		this.entityImage.draw(x,y);
+		this.entityImage.draw(x-4,y-4,16,16);
 		g.setDrawMode(g.MODE_NORMAL);
 	}
 }

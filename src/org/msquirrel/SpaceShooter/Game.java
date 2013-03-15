@@ -8,6 +8,7 @@ import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 
@@ -27,13 +28,16 @@ public class Game extends BasicGame{
 		world = new World();
 		container.setVSync(true);
 		container.setTargetFrameRate(60);
-		//container.setSmoothDeltas(true);
+		container.setSmoothDeltas(true);
 		//container.setFullscreen(true);
 		container.setUpdateOnlyWhenVisible(true);
 	}
 
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
+		if(container.getInput().isKeyPressed(Input.KEY_ESCAPE)){
+			container.destroy();
+		}
 		if(!started){
 			loading = true;
 			loadCounter++;
@@ -74,7 +78,7 @@ public class Game extends BasicGame{
 	public static void main(String[] argv) {
 		try {
 			AppGameContainer container = new AppGameContainer(new Game("Space Shooter"));
-			container.setDisplayMode(832, 640, false);
+			container.setDisplayMode(800, 600, false);
 			container.start();
 		} catch (SlickException e) {
 			e.printStackTrace();

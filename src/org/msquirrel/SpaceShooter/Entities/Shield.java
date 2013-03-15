@@ -1,6 +1,7 @@
 package org.msquirrel.SpaceShooter.Entities;
 
 import org.msquirrel.SpaceShooter.World;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
@@ -16,10 +17,16 @@ public class Shield extends PickUp{
 	@Override
 	public void collision() throws SlickException{
 		if(this.hitBox.intersects(world.getPlayer().getHitBox())){
-			world.getPlayer().shielded = true;
-			world.getPlayer().setShieldCounter(world.getPlayer().getShieldCounter()-500);
+			world.getPlayer().ShieldCounter += 50;
 			this.die();
 		}
 	}
 	
+	@Override
+	public void draw(Graphics g){
+		g.setDrawMode(g.MODE_ADD_ALPHA);
+		entityImage.draw(x,y);
+		g.setDrawMode(g.MODE_NORMAL);
+		//g.draw(hitBox);
+	}
 }

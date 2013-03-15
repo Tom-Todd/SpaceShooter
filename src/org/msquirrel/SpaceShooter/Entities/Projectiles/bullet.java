@@ -5,6 +5,7 @@ import org.msquirrel.SpaceShooter.World;
 import org.msquirrel.SpaceShooter.Entities.Entity;
 import org.msquirrel.SpaceShooter.Entities.Effects.Glow;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
@@ -16,7 +17,8 @@ public class bullet extends projectile{
 		this.entityImage = new Image("res/bullet.png");
 		this.width = 8;
 		this.height = 8;
-		world.entities.add(new Glow(x, y, world, this));
+		this.effect = new Glow(x, y, world, this);
+		world.entities.add(this.effect);
 	}
 	
 	@Override
@@ -29,5 +31,15 @@ public class bullet extends projectile{
 		this.setHitBox(x, y, entityImage.getWidth(), entityImage.getHeight());
 		lifeTime++;
 		collision();
+		effect.setX(x);
+		effect.setY(y);
+	}
+	
+	@Override
+	public void draw(Graphics g){
+		g.setDrawMode(g.MODE_ADD_ALPHA);
+		entityImage.draw(x,y);
+		g.setDrawMode(g.MODE_NORMAL);
+		//g.draw(hitBox);
 	}
 }

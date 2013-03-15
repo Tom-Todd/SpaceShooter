@@ -22,7 +22,7 @@ public class Player extends Entity{
 	protected Image Shield;
 	protected Circle ShieldCircle;
 	protected float ShieldScale = 1;
-	protected int ShieldCounter;
+	protected int ShieldCounter = 500;
 	protected boolean growing = true;
 	
 	public Player(float x, float y, World world) throws SlickException{
@@ -42,27 +42,22 @@ public class Player extends Entity{
 		movingRight = container.getInput().isKeyDown(Input.KEY_D);
 		movingLeft = container.getInput().isKeyDown(Input.KEY_A);	
 		movingDown = container.getInput().isKeyDown(Input.KEY_S);
+		if(container.getInput().isKeyDown(Input.KEY_E)){
+			shielded = true;
+		}else{
+			shielded = false;
+		}
 	
 		if(container.getInput().isMouseButtonDown(0) && ShootCounter > 10 && !world.isLoadingMap()){
 			world.projectiles.add(new bullet(this.x, this.y, (float)container.getInput().getMouseX() - cam.getX(), (float)container.getInput().getMouseY() - cam.getY(), world, this));
 			ShootCounter = 0;
 		}
 		ShootCounter++;
-		if(shielded){
-			ShieldCounter++;
-			if(growing){
-				ShieldScale += 0.005;
-			}else{
-				ShieldScale -= 0.005;
-			}
-			if(ShieldScale >= 1.3){
-				growing = false;
-			}
-			if(ShieldScale <= 1){
-				growing = true;
-			}
+		
+		if(shielded && !(ShieldCounter <= 0)){
+			ShieldCounter--;
 		}
-		if(ShieldCounter > 0){
+		if(ShieldCounter <= 0){
 			shielded = false;
 		}
 		
@@ -82,6 +77,7 @@ public class Player extends Entity{
 			world.setLoadingMap(true);
 			world.setTransitioningOut(true);
 		}
+		System.out.println(ShieldCounter);
 	}
 	
 	@Override
@@ -160,7 +156,7 @@ public class Player extends Entity{
 	@Override
 	public void hit(){
 		if(!shielded){
-			//this.die();
+			this.die();
 		}
 	}
 	
