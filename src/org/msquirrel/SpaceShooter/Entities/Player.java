@@ -157,7 +157,7 @@ public class Player extends Entity{
 	@Override
 	public void hit(){
 		if(!shielded){
-			this.die();
+			//this.die();
 		}
 		if(shielded){
 			this.ShieldCounter -= 20;

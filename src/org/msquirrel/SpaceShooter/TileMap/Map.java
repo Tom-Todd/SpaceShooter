@@ -48,7 +48,10 @@ public class Map implements TileBasedMap{
 			mapImage = new Image("res/lv2Map.png");
 			loadmap = mapLoader.loadBitmap("res/map2.png");
 		}
-		
+		if(mapNumber == 2){
+			mapImage = new Image("res/lv3Map.png");
+			loadmap = mapLoader.loadBitmap("res/map3.png");
+		}	
 		WIDTH = loadmap.width;
 		HEIGHT = loadmap.height;
 		map = new Tile[WIDTH][HEIGHT];

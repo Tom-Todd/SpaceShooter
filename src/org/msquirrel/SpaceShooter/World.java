@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.msquirrel.SpaceShooter.Entities.Boss;
 import org.msquirrel.SpaceShooter.Entities.EnemyBase;
 import org.msquirrel.SpaceShooter.Entities.Entity;
 import org.msquirrel.SpaceShooter.Entities.Player;
@@ -43,15 +44,18 @@ public class World {
 	private int transitionTimer = 1;
 	private boolean debugging;
 	
-	public World(int Map) throws SlickException{
+	public World(int Map) throws SlickException, IOException{
 		this.cam = new Camera(50,200);
 		images = new ImageLoader();
 		map = new Map(cam, Map);
 		player = new Player(400,100, this);
+		cam.lookAt(player);
 		background = new Image("res/background.png");
 		background.setFilter(Image.FILTER_NEAREST);
 		entities.add(player);
-		map.addEnemies(this, 20);
+		entities.add(new Boss(200, 300, this, player));
+		if(Map == 0)map.addEnemies(this, 20);
+		if(Map == 1)map.addEnemies(this, 30);
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException{
@@ -124,7 +128,26 @@ public class World {
 				cam.setY(200);
 				cam.setNextX(50);
 				cam.setNextY(200);
+				cam.lookAt(player);
 				map.addEnemies(this, 30);
+				transitioningIn = true;
+			}
+			if(map.getCurrentMap() == 2){
+				for(int i = 0; i < entities.size();i++){
+					if(entities.get(i) != null){
+						entities.get(i).setDifficulty(1);
+					}
+				}
+				player.setX(370);
+				player.setY(1850);
+				player.setNextX(370);
+				player.setNextY(1850);
+				cam.setX(-150);
+				cam.setY(-200);
+				cam.setNextX(-150);
+				cam.setNextY(-200);
+				cam.lookAt(player);
+				map.addEnemies(this, 40);
 				transitioningIn = true;
 			}
 		}

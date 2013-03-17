@@ -1,5 +1,7 @@
 package org.msquirrel.SpaceShooter;
 
+import org.msquirrel.SpaceShooter.Entities.Entity;
+
 public class Camera {
 	private float x;
 	private float y;
@@ -16,6 +18,13 @@ public class Camera {
 	public void update(int delta){
 		this.x = nextX;
 		this.y = nextY;
+	}
+	
+	public void lookAt(Entity entity){
+		this.x = -entity.getX()+(400);
+		this.y = -entity.getY()+(300);
+		this.nextX = -entity.getX()+(400);
+		this.nextY = -entity.getY()+(300);
 	}
 	
 	public float getWindowX(float x){

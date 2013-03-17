@@ -1,6 +1,8 @@
 package org.msquirrel.SpaceShooter;
 
 
+import java.io.IOException;
+
 import org.msquirrel.SpaceShooter.Entities.Player;
 import org.msquirrel.SpaceShooter.Entities.Projectiles.bullet;
 import org.newdawn.slick.AppGameContainer;
@@ -33,7 +35,12 @@ public class Game extends BasicGame{
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
-		world = new World(0);
+		try {
+			world = new World(0);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.ShieldBarSheet = new Image("res/ShieldBar.png");
 		this.ShieldBarFull = ShieldBarSheet.getSubImage(0, 0, ShieldBarSheet.getWidth(), ShieldBarSheet.getHeight()/2);
 		this.ShieldBarEmpty = ShieldBarSheet.getSubImage(0, 24, 332, 21);
@@ -43,7 +50,7 @@ public class Game extends BasicGame{
 		container.setUpdateOnlyWhenVisible(true);
 		inGame = new Music("res/inGame.wav");
 		container.setMusicVolume(0.5f);
-		inGame.play();
+		//inGame.play();
 	}
 
 	@Override
@@ -56,7 +63,11 @@ public class Game extends BasicGame{
 		}
 		if(this.loading){
 			if(!restarted){
-				restart();
+				try {
+					restart();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 			loadCounter++;
 			if(loadCounter > 70){
@@ -75,7 +86,7 @@ public class Game extends BasicGame{
 		ShieldBarFull = ShieldBarSheet.getSubImage(0, 0, r, 21);
 	}
 	
-	public void restart() throws SlickException{
+	public void restart() throws SlickException, IOException{
 		lastScore = world.getScore();
 		System.out.println(lastScore);
 		int shieldLife = world.getPlayer().getShieldCounter();
