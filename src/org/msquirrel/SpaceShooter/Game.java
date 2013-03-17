@@ -35,12 +35,7 @@ public class Game extends BasicGame{
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
-		try {
-			world = new World(0);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		world = new World(0);
 		this.ShieldBarSheet = new Image("res/ShieldBar.png");
 		this.ShieldBarFull = ShieldBarSheet.getSubImage(0, 0, ShieldBarSheet.getWidth(), ShieldBarSheet.getHeight()/2);
 		this.ShieldBarEmpty = ShieldBarSheet.getSubImage(0, 24, 332, 21);

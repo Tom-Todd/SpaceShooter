@@ -43,19 +43,37 @@ public class World {
 	private boolean transitioningIn;
 	private int transitionTimer = 1;
 	private boolean debugging;
+	private Boss boss;
 	
-	public World(int Map) throws SlickException, IOException{
+	public World(int Map) throws SlickException{
 		this.cam = new Camera(50,200);
 		images = new ImageLoader();
 		map = new Map(cam, Map);
 		player = new Player(400,100, this);
-		cam.lookAt(player);
 		background = new Image("res/background.png");
 		background.setFilter(Image.FILTER_NEAREST);
 		entities.add(player);
-		entities.add(new Boss(200, 300, this, player));
-		if(Map == 0)map.addEnemies(this, 20);
-		if(Map == 1)map.addEnemies(this, 30);
+		cam.lookAt(player);
+		if(Map == 0){
+			map.addEnemies(this, 20);
+		}
+		if(Map == 1){
+			map.addEnemies(this, 30);
+			player.setX(400);
+			player.setY(100);
+			player.setNextX(400);
+			player.setNextY(100);
+			cam.lookAt(player);
+		}
+		if(Map == 2){
+			player.setX(1000);
+			player.setY(1850);
+			player.setNextX(1000);
+			player.setNextY(1850);
+			cam.lookAt(player);
+			map.addEnemies(this, 0);
+			map.openDoors();
+		}
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException{
@@ -80,6 +98,9 @@ public class World {
 		if(loadingMap){
 			loadMap(map.getCurrentMap()+1);
 		}
+		if(player.getY() < 1093 && map.getCurrentMap() == 2){
+			map.closeDoors();
+		}
 	}
 	public void draw(Graphics g){
 		background.draw();
@@ -98,7 +119,10 @@ public class World {
 		g.drawString("Enemies- " + enemyNo, 10, 30);
 		String ec = Integer.toString(entityCount);
 		g.drawString("Entities- " + ec, 10, 50);
-		
+		String px = Float.toString(player.getX());
+		g.drawString("PlayerX- " + px, 10, 70);
+		String py = Float.toString(player.getY());
+		g.drawString("PlayerY- " + py, 10, 90);
 	}
 
 	public void loadMap(int Map) throws SlickException {
@@ -124,10 +148,6 @@ public class World {
 				player.setY(100);
 				player.setNextX(400);
 				player.setNextY(100);
-				cam.setX(50);
-				cam.setY(200);
-				cam.setNextX(50);
-				cam.setNextY(200);
 				cam.lookAt(player);
 				map.addEnemies(this, 30);
 				transitioningIn = true;
@@ -138,16 +158,13 @@ public class World {
 						entities.get(i).setDifficulty(1);
 					}
 				}
-				player.setX(370);
+				player.setX(1000);
 				player.setY(1850);
-				player.setNextX(370);
+				player.setNextX(1000);
 				player.setNextY(1850);
-				cam.setX(-150);
-				cam.setY(-200);
-				cam.setNextX(-150);
-				cam.setNextY(-200);
 				cam.lookAt(player);
-				map.addEnemies(this, 40);
+				map.addEnemies(this, 0);
+				map.openDoors();
 				transitioningIn = true;
 			}
 		}

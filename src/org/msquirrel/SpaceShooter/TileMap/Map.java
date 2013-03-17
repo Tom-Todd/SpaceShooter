@@ -5,6 +5,7 @@ import java.util.Random;
 
 import org.msquirrel.SpaceShooter.Camera;
 import org.msquirrel.SpaceShooter.World;
+import org.msquirrel.SpaceShooter.Entities.Boss;
 import org.msquirrel.SpaceShooter.Entities.EnemyBase;
 import org.msquirrel.SpaceShooter.TileMap.Tiles.Tile;
 import org.msquirrel.SpaceShooter.TileMap.Tiles.TileDoor;
@@ -49,8 +50,8 @@ public class Map implements TileBasedMap{
 			loadmap = mapLoader.loadBitmap("res/map2.png");
 		}
 		if(mapNumber == 2){
-			mapImage = new Image("res/lv3Map.png");
-			loadmap = mapLoader.loadBitmap("res/map3.png");
+			mapImage = new Image("res/lv4Map.png");
+			loadmap = mapLoader.loadBitmap("res/map4.png");
 		}	
 		WIDTH = loadmap.width;
 		HEIGHT = loadmap.height;
@@ -138,29 +139,38 @@ public class Map implements TileBasedMap{
 	}
 	
 	public void addEnemies(World world, int enemyNumber) throws SlickException{
-		while(world.getEnemies() < enemyNumber){
-			for(int x = getWidthInTiles()-1; x > 1; x--){
-				for(int y = getHeightInTiles()-1; y > 1; y--){
-					if(map[x][y] != null){
-						if(map[x][y] instanceof TileGround){
-							Random generator = new Random();
-							int r = generator.nextInt(100);
-							if(r == 1){
-								if(world.getEnemies() < enemyNumber){
-									try {
-										world.entities.add(new EnemyBase(x*TILE_SIZE, y*TILE_SIZE, world, world.getPlayer()));
-									} catch (IOException e) {
-										e.printStackTrace();
+		if(currentMap != 2){
+			while(world.getEnemies() < enemyNumber){
+				for(int x = getWidthInTiles()-1; x > 1; x--){
+					for(int y = getHeightInTiles()-1; y > 1; y--){
+						if(map[x][y] != null){
+							if(map[x][y] instanceof TileGround){
+								Random generator = new Random();
+								int r = generator.nextInt(100);
+								if(r == 1){
+									if(world.getEnemies() < enemyNumber){
+										try {
+											world.entities.add(new EnemyBase(x*TILE_SIZE, y*TILE_SIZE, world, world.getPlayer()));
+										} catch (IOException e) {
+											e.printStackTrace();
+										}
+										world.setEnemies(world.getEnemies()+1);
 									}
-									world.setEnemies(world.getEnemies()+1);
 								}
 							}
+							
 						}
-						
 					}
 				}
 			}
+		}if(this.currentMap == 2){
+			try {
+				world.entities.add(new Boss(980, 850, world, world.getPlayer()));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
+		
 	}
 	
 	public void openDoors(){
@@ -168,6 +178,16 @@ public class Map implements TileBasedMap{
 			for(int y =0; y < getHeightInTiles(); y++){
 				if(map[x][y] instanceof TileDoor){
 					map[x][y].setBlocked(false);
+				}
+			}
+		}
+	}
+	
+	public void closeDoors(){
+		for(int x =0; x < getWidthInTiles(); x++){
+			for(int y =0; y < getHeightInTiles(); y++){
+				if(map[x][y] instanceof TileDoor){
+					map[x][y].setBlocked(true);
 				}
 			}
 		}

@@ -12,4 +12,7 @@ public class Effect extends Entity{
 		this.parent = parent;
 	}
 	
+	public void setParent(Entity Parent){
+		this.parent = Parent;
+	}
 }

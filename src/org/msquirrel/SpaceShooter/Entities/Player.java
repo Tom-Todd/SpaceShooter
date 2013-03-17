@@ -77,7 +77,6 @@ public class Player extends Entity{
 				world.setLoadingMap(true);
 				world.setTransitioningOut(true);
 			}
-			System.out.println(ShieldCounter);
 		}
 	}
 	
@@ -157,7 +156,7 @@ public class Player extends Entity{
 	@Override
 	public void hit(){
 		if(!shielded){
-			//this.die();
+			this.die();
 		}
 		if(shielded){
 			this.ShieldCounter -= 20;
