@@ -35,7 +35,7 @@ public class Game extends BasicGame{
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
-		world = new World(0);
+		world = new World(2);
 		this.ShieldBarSheet = new Image("res/ShieldBar.png");
 		this.ShieldBarFull = ShieldBarSheet.getSubImage(0, 0, ShieldBarSheet.getWidth(), ShieldBarSheet.getHeight()/2);
 		this.ShieldBarEmpty = ShieldBarSheet.getSubImage(0, 24, 332, 21);
@@ -45,7 +45,7 @@ public class Game extends BasicGame{
 		container.setUpdateOnlyWhenVisible(true);
 		inGame = new Music("res/inGame.wav");
 		container.setMusicVolume(0.5f);
-		//inGame.play();
+		//inGame.loop();
 	}
 
 	@Override

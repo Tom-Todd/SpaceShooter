@@ -23,7 +23,7 @@ public class Explosion extends Effect{
 		explosion = new Animation(new Image[]{sprites.getSprite(0, 0),sprites.getSprite(1, 0), sprites.getSprite(2, 0)}, 100);
 		explosion.setLooping(false);
 		this.delay = Delay;
-		damageRadius = new Circle(x, y, 32);
+		damageRadius = new Circle(x, y, 64);
 	}
 	
 	@Override
@@ -43,7 +43,7 @@ public class Explosion extends Effect{
 	@Override
 	public void draw(Graphics g){
 		if(count > delay){
-			explosion.draw(x-30, y-30, 64, 64);
+			explosion.draw(x-60, y-60, 128, 128);
 		}
 		g.draw(damageRadius);
 	}

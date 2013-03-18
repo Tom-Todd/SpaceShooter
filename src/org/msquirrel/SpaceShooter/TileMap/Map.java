@@ -165,7 +165,7 @@ public class Map implements TileBasedMap{
 			}
 		}if(this.currentMap == 2){
 			try {
-				world.entities.add(new Boss(980, 850, world, world.getPlayer()));
+				world.entities.add(new Boss(990, 850, world, world.getPlayer()));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
