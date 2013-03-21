@@ -44,6 +44,7 @@ public class World {
 	private int transitionTimer = 1;
 	private boolean debugging;
 	private Boss boss;
+	private Entity worldEntity;
 	
 	public World(int Map) throws SlickException{
 		this.cam = new Camera(50,200);
@@ -54,6 +55,7 @@ public class World {
 		background.setFilter(Image.FILTER_NEAREST);
 		entities.add(player);
 		cam.lookAt(player);
+		worldEntity = new Entity(0, 0, this);
 		if(Map == 0){
 			map.addEnemies(this, 20);
 		}
@@ -66,10 +68,10 @@ public class World {
 			cam.lookAt(player);
 		}
 		if(Map == 2){
-			player.setX(1000);
-			player.setY(1850);
-			player.setNextX(1000);
-			player.setNextY(1850);
+			player.setX(1025);
+			player.setY(1870);
+			player.setNextX(1020);
+			player.setNextY(1870);
 			cam.lookAt(player);
 			map.addEnemies(this, 0);
 			map.openDoors();
@@ -231,5 +233,10 @@ public class World {
 	public void setDebugging(boolean debugging) {
 		this.debugging = debugging;
 	}
-	
+	public Entity getWorldEntity() {
+		return worldEntity;
+	}
+	public void setWorldEntity(Entity worldEntity) {
+		this.worldEntity = worldEntity;
+	}
 }

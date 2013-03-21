@@ -30,6 +30,7 @@ public class Boss extends EnemyBase{
 	private Image LifeBarSheet;
 	private Image LifeBarFull;
 	private Image LifeBarEmpty;
+	private Random generator;
 	
 	public Boss(float x, float y, World world, Player player)
 			throws SlickException, IOException {
@@ -45,6 +46,7 @@ public class Boss extends EnemyBase{
 		this.height = 64;
 		boss.setCurrentFrame(0);
 		boss.stop();
+		generator = new Random();
 	}
 	
 	@Override
@@ -95,7 +97,9 @@ public class Boss extends EnemyBase{
 			}
 			if(attack2 && attackCounter > 5){
 				shotTargetX = x + (xAmount);
-				shotTargetY = y + 100;
+				if(generator.nextInt(2) == 1){
+					shotTargetY = y + 100;
+				}
 				world.projectiles.add(new grenade(x+32, y+25, shotTargetX, shotTargetY, world, this));
 				grenadeCount++;
 				attackCounter = 0;
@@ -130,9 +134,9 @@ public class Boss extends EnemyBase{
 		attackCounter++;
 		moveCounter++;
 		if(hitPoints <= 0){
-			world.entities.add(new Explosion(x, y, world, this, 0));
-			world.entities.add(new Explosion(x-10, y+5, world, this, 30));
-			world.entities.add(new Explosion(x+15, y, world, this, 50));
+			world.entities.add(new Explosion(x, y, world, world.getWorldEntity(), 0, false, 1));
+			world.entities.add(new Explosion(x-10, y+5, world, world.getWorldEntity(), 30, false,1));
+			world.entities.add(new Explosion(x+15, y, world, world.getWorldEntity(), 50, false,1));
 			this.die();
 		}
 		for(int i = 0; i < boss.getFrameCount(); i++){

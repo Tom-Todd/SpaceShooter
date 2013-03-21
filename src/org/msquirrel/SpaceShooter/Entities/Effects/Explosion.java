@@ -16,14 +16,24 @@ public class Explosion extends Effect{
 	private int delay;
 	private int count;
 	private Circle damageRadius;
+	private boolean damaging;
+	private float scale;
 	
-	public Explosion(float x, float y, World world, Entity parent, int Delay)throws SlickException {
+	public Explosion(float x, float y, World world, Entity parent, int Delay, boolean damaging, float scale)throws SlickException {
 		super(x, y, world, parent);
 		sprites = new SpriteSheet("res/explosion.png", 59, 59);
-		explosion = new Animation(new Image[]{sprites.getSprite(0, 0),sprites.getSprite(1, 0), sprites.getSprite(2, 0)}, 100);
+		this.scale = scale;
+		explosion = new Animation(new Image[]{sprites.getSprite(0, 0),
+				sprites.getSprite(1, 0),sprites.getSprite(2, 0)}, 100);
 		explosion.setLooping(false);
 		this.delay = Delay;
-		damageRadius = new Circle(x, y, 64);
+		this.damaging = damaging;
+		if(damaging){
+			damageRadius = new Circle(x, y, 64*scale);
+		}
+		if(!damaging){
+			damageRadius = new Circle(0, 0, 64*scale);
+		}
 	}
 	
 	@Override
@@ -34,7 +44,7 @@ public class Explosion extends Effect{
 				this.die();
 			}
 		}
-		if(world.getPlayer().getHitBox().intersects(this.damageRadius)){
+		if(world.getPlayer().getHitBox().intersects(this.damageRadius) && damaging){
 			world.getPlayer().hit();
 		}
 		count++;
@@ -43,7 +53,7 @@ public class Explosion extends Effect{
 	@Override
 	public void draw(Graphics g){
 		if(count > delay){
-			explosion.draw(x-60, y-60, 128, 128);
+			explosion.draw(x-60, y-60, 128*scale, 128*scale);
 		}
 		g.draw(damageRadius);
 	}

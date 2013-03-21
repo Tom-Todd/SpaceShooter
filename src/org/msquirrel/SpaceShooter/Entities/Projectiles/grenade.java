@@ -25,7 +25,7 @@ public class grenade extends projectile{
 		this.move(delta);
 		if(lifeTime > 100){
 			this.alive = false;
-			world.entities.add(new Explosion(x, y, world, this, 0));
+			world.entities.add(new Explosion(x, y, world, this, 0, true, 1));
 			die();
 		}
 		this.setHitBox(x, y, entityImage.getWidth(), entityImage.getHeight());

@@ -6,6 +6,7 @@ import java.util.Random;
 
 import org.msquirrel.SpaceShooter.Camera;
 import org.msquirrel.SpaceShooter.World;
+import org.msquirrel.SpaceShooter.Entities.Effects.Explosion;
 import org.msquirrel.SpaceShooter.Entities.Projectiles.bullet;
 import org.msquirrel.SpaceShooter.TileMap.Map;
 import org.newdawn.slick.GameContainer;
@@ -191,6 +192,7 @@ public class EnemyBase extends Entity implements Mover{
 	@Override
 	public void die() throws SlickException{
 		Random generator = new Random();
+		world.entities.add(new Explosion(x+40, y+40, world, world.getWorldEntity(), 0, false, 0.5f));
 		this.alive = false;
 		if(world.getEnemies() == 1){
 			world.addEntity(new key(this.x, this.y, world));
