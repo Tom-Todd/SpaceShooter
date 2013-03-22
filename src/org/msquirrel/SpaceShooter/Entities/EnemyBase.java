@@ -7,6 +7,8 @@ import java.util.Random;
 import org.msquirrel.SpaceShooter.Camera;
 import org.msquirrel.SpaceShooter.World;
 import org.msquirrel.SpaceShooter.Entities.Effects.Explosion;
+import org.msquirrel.SpaceShooter.Entities.Pickup.ShieldPickup;
+import org.msquirrel.SpaceShooter.Entities.Pickup.key;
 import org.msquirrel.SpaceShooter.Entities.Projectiles.bullet;
 import org.msquirrel.SpaceShooter.TileMap.Map;
 import org.newdawn.slick.GameContainer;
@@ -23,7 +25,6 @@ import org.newdawn.slick.util.pathfinding.PathFinder;
 
 public class EnemyBase extends Entity implements Mover{
 	protected Player player;
-	protected int attackCounter;
 	protected int moveCounter;
 	protected boolean moved;
 	protected Path CurPath;
@@ -198,14 +199,16 @@ public class EnemyBase extends Entity implements Mover{
 			world.addEntity(new key(this.x, this.y, world));
 		}
 		if(generator.nextInt(5) == 1 && !(world.getEnemies() == 1)){
-			world.addEntity(new Shield(this.x, this.y, world));
+			world.addEntity(new ShieldPickup(this.x, this.y, world));
 		}
 		world.setScore(world.getScore()+1);
 		world.entities.remove(this);
 	}
 	
 	public void hit() throws SlickException{
-		die();
+		if(!shielded){
+			die();
+		}
 	}
 	
 	@Override

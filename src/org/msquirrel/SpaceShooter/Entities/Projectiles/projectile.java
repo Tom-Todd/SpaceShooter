@@ -52,10 +52,10 @@ public class projectile extends Entity{
 					die();
 				}
 			}
-			if(this.hitBox.intersects(world.getPlayer().getShieldCircle()) 
+			/*if(this.hitBox.intersects(world.getPlayer().getShieldCircle()) 
 					&& Origin != world.getPlayer() && world.getPlayer().isShielded()){
 				die();
-			}
+			}*/
 		}
 	}
 	
@@ -64,4 +64,13 @@ public class projectile extends Entity{
 		this.alive = false;
 		world.projectiles.remove(this);
 	}
+
+	public Entity getOrigin() {
+		return Origin;
+	}
+
+	public void setOrigin(Entity origin) {
+		Origin = origin;
+	}
+	
 }

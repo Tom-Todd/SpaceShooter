@@ -1,35 +1,56 @@
 package org.msquirrel.SpaceShooter.Entities;
 
 import org.msquirrel.SpaceShooter.World;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Circle;
 
-public class Shield extends PickUp{
-
-	public Shield(float x, float y, World world) throws SlickException {
+public class Shield extends Entity{
+	protected Circle ShieldCircle;
+	protected Entity parent;
+	
+	public Shield(float x, float y, World world, Entity parent) throws SlickException {
 		super(x, y, world);
-		this.entityImage = world.getImages().ShieldPickup;
-		this.height = entityImage.getHeight();
-		this.width = entityImage.getWidth();
+		this.entityImage = world.getImages().Shield;
+		this.lifeTime = 300;
+		ShieldCircle = new Circle(x-23, y-23, 30);
+		this.parent = parent;
 	}
 	
 	@Override
-	public void collision() throws SlickException{
-		if(this.hitBox.intersects(world.getPlayer().getHitBox())){
-			if(world.getPlayer().getShieldCounter() < 500 && world.getPlayer().getShieldCounter()+50 < 300){
-				world.getPlayer().setShieldCounter(world.getPlayer().getShieldCounter()+50);
-			}else{
-				world.getPlayer().setShieldCounter(300);
-			}
+	public void update(GameContainer container, int Delta) throws SlickException{
+		if(parent.shielded){
+			this.x = parent.x;
+			this.y = parent.y;
+		}else{
+			this.x = -100;
+			this.y = -100;
+		}
+		ShieldCircle.setX(parent.x-23);
+		ShieldCircle.setY(parent.y-23);
+		collision();
+		if(!this.parent.alive){
 			this.die();
 		}
 	}
 	
-	@Override
 	public void draw(Graphics g){
-		g.setDrawMode(g.MODE_ADD_ALPHA);
-		entityImage.draw(x,y);
-		g.setDrawMode(g.MODE_NORMAL);
+		if(parent.shielded){
+			g.setDrawMode(g.MODE_ADD_ALPHA);
+			entityImage.draw(x-24, y-24, ShieldScale);
+			g.setDrawMode(g.MODE_NORMAL);
+			g.draw(ShieldCircle);
+		}
+	}
+	
+	@Override
+	public void collision() throws SlickException{
+		for(int i = 0; i < world.projectiles.size(); i++){
+			if(this.ShieldCircle.intersects(world.projectiles.get(i).getHitBox())
+					&& !(world.projectiles.get(i).getOrigin() == this.parent)){
+				world.projectiles.get(i).die();
+			}
+		}
 	}
 }

@@ -1,6 +1,8 @@
-package org.msquirrel.SpaceShooter.Entities;
+package org.msquirrel.SpaceShooter.Entities.Pickup;
 
 import org.msquirrel.SpaceShooter.World;
+import org.msquirrel.SpaceShooter.Entities.Entity;
+import org.msquirrel.SpaceShooter.Entities.Team;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;

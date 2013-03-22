@@ -8,6 +8,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -22,13 +23,18 @@ public class Entity {
 	protected float height;
 	protected int lifeTime;
 	protected Vector2f velocity;
-	protected boolean alive = true;
 	protected Team team = Team.NO_TEAM;
+	//Entity Life/Death
+	protected boolean alive = true;
+	protected boolean dying;
+	protected int deathCounter;
 	//Movement
 	protected boolean movingUp;
 	protected boolean movingDown;
 	protected boolean movingLeft;
 	protected boolean movingRight;
+	protected boolean moved;
+	protected boolean inSafeZone;
 	//Other
 	protected World world;
 	protected Rectangle hitBox;
@@ -36,9 +42,15 @@ public class Entity {
 	protected Camera cam;
 	protected Map map;
 	protected Effect effect;
+	protected float ShieldScale = 1;
+	protected Entity Shield;
 	//Attack
 	protected boolean attacking;
 	protected int difficulty;
+	protected int attackCounter;
+	//Migrated Player Variables
+	protected boolean shielded;
+	
 	
 	
 	public Entity(float x, float y, World world) throws SlickException{
@@ -119,101 +131,78 @@ public class Entity {
 		}
 	}
 
+	//Getters and Setters
 	public boolean isAlive() {
 		return alive;
 	}
-	
 	public float getMapPosX(){
 		return x+cam.getX();
 	}
-	
 	public float getMapPosY(){
 		return y+cam.getY();
 	}
-	
 	public int getMapTileX(){
 		return (int) x/map.TILE_SIZE;
 	}
-	
 	public int getMapTileY(){
 		return (int) y/map.TILE_SIZE;
 	}
-	
 	public Team getTeam() {
 		return team;
 	}
-
 	public void setTeam(Team team) {
 		this.team = team;
 	}
-	
 	public void die() throws SlickException{
 		world.entities.remove(this);
 	}
-	
 	public void setAlive(boolean alive) {
 		this.alive = alive;
 	}
-	
 	public float getX() {
 		return x;
 	}
-
-
 	public void setX(float x) {
 		this.x = x;
 	}
-	
 	public float getNextX() {
 		return nextX;
 	}
-
 	public void setNextX(float nextX) {
 		this.nextX = nextX;
 	}
-
 	public float getNextY() {
 		return nextY;
 	}
-
 	public void setNextY(float nextY) {
 		this.nextY = nextY;
 	}
-
 	public float getY() {
 		return y;
 	}
-
 	public void setY(float y) {
 		this.y = y;
 	}
-	
 	public float getWidth() {
 		return width;
 	}
-
 	public void setWidth(float width) {
 		this.width = width;
 	}
-
 	public float getHeight() {
 		return height;
 	}
-
 	public void setHeight(float height) {
 		this.height = height;
 	}
-
 	public void hit() throws SlickException {
 		
 	}
-	
 	public void collision() throws SlickException{
 	}
 	public int getDifficulty() {
 		return difficulty;
 	}
-
 	public void setDifficulty(int difficulty) {
 		this.difficulty = difficulty;
 	}
@@ -223,5 +212,28 @@ public class Entity {
 	public void setEffect(Effect effect) {
 		this.effect = effect;
 	}
-	
+	public boolean isInSafeZone() {
+		return inSafeZone;
+	}
+	public void setInSafeZone(boolean inSafeZone) {
+		this.inSafeZone = inSafeZone;
+	}
+	public boolean isShielded() {
+		return shielded;
+	}
+	public void setShielded(boolean shielded) {
+		this.shielded = shielded;
+	}
+	public int getLifeTime() {
+		return lifeTime;
+	}
+	public void setLifeTime(int lifeTime) {
+		this.lifeTime = lifeTime;
+	}
+	public Entity getShield() {
+		return Shield;
+	}
+	public void setShield(Entity shield) {
+		Shield = shield;
+	}
 }

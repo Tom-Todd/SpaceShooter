@@ -24,18 +24,6 @@ import org.newdawn.slick.particles.ParticleIO;
 import org.newdawn.slick.particles.ParticleSystem;
 
 public class Player extends Entity{
-	protected int ShootCounter;
-	protected boolean inSafeZone;
-	protected boolean moved;
-	protected boolean shielded;
-	protected Image Shield;
-	protected Circle ShieldCircle;
-	protected float ShieldScale = 1;
-	protected int ShieldCounter = 300;
-	protected boolean growing = true;
-	private SpriteSheet sprites;
-	private boolean dying;
-	private int deathCounter;
 	
 	public Player(float x, float y, World world) throws SlickException{
 		super(x, y, world);
@@ -43,9 +31,9 @@ public class Player extends Entity{
 		this.width = 16;
 		this.height = 16;
 		entityImage = new Image("res/PlayerSprites.png");
-		Shield = world.getImages().Shield;
-		ShieldCircle = new Circle(x-32, y-32, 30);
 		hitBox = new Rectangle(x, y, this.width, this.height);
+		this.Shield = new Shield(x, y, world, this);
+		world.addEntity(Shield);
 	}
 	
 	@Override
@@ -61,22 +49,22 @@ public class Player extends Entity{
 			}else{
 				shielded = false;
 			}
-			if(container.getInput().isMouseButtonDown(0) && ShootCounter > 10){
+			if(container.getInput().isMouseButtonDown(0) && attackCounter > 10){
 				world.projectiles.add(new bullet(this.x+(this.width)/2, this.y+(this.height)/2, 
 						(float)container.getInput().getMouseX() - cam.getX(), (float)container.getInput().getMouseY() - cam.getY(), 
 						world, this));
-				ShootCounter = 0;
+				attackCounter = 0;
 			}
 			float deltaX = container.getInput().getMouseX() - (x+ cam.getX());
 			float deltaY = container.getInput().getMouseY() - (y+ cam.getY());
 
 			entityImage.setRotation((float) ((Math.toDegrees(Math.atan2(deltaY, deltaX))-90 )));
-			ShootCounter++;
+			attackCounter++;
 			
-			if(shielded && !(ShieldCounter <= 0)){
-				ShieldCounter--;
+			if(shielded && !(Shield.getLifeTime() <= 0)){
+				Shield.setLifeTime(Shield.getLifeTime()-1);
 			}
-			if(ShieldCounter <= 0){
+			if(Shield.getLifeTime() <= 0){
 				shielded = false;
 			}
 			if(dying){
@@ -90,7 +78,6 @@ public class Player extends Entity{
 				this.move(delta);
 			}
 			setHitBox(x, y, entityImage.getWidth(), entityImage.getHeight());
-			ShieldCircle.setLocation(x-23, y-23);
 	
 			if(map.map[this.getMapTileX()][this.getMapTileY()] instanceof TileSafeZone){
 				this.inSafeZone = true;
@@ -184,9 +171,9 @@ public class Player extends Entity{
 			this.dying = true;
 		}
 		if(shielded){
-			this.ShieldCounter -= 20;
-			if(this.ShieldCounter < 0){
-				ShieldCounter = 0;
+			Shield.setLifeTime(Shield.getLifeTime()-20);
+			if(Shield.getLifeTime() < 0){
+				Shield.setLifeTime(0);
 			}
 		}
 	}
@@ -197,48 +184,9 @@ public class Player extends Entity{
 		entityImage.draw(x,y);
 		g.setColor(Color.black);
 		if(this.shielded){
-			g.setDrawMode(g.MODE_ADD_ALPHA);
-			Shield.draw(x-24, y-24, ShieldScale);
-			g.setDrawMode(g.MODE_NORMAL);
 		}
 		if(world.isDebugging()){
 			g.draw(hitBox);
-			if(shielded){
-				g.draw(ShieldCircle);
-			}
 		}
-	}
-	
-	public boolean isInSafeZone() {
-		return inSafeZone;
-	}
-
-	public void setInSafeZone(boolean inSafeZone) {
-		this.inSafeZone = inSafeZone;
-	}
-
-	public Circle getShieldCircle() {
-		return ShieldCircle;
-	}
-
-	public void setShieldCircle(Circle shieldCircle) {
-		ShieldCircle = shieldCircle;
-	}
-
-	public boolean isShielded() {
-		return shielded;
-	}
-
-	public void setShielded(boolean shielded) {
-		this.shielded = shielded;
-	}
-
-	public int getShieldCounter() {
-		return ShieldCounter;
-	}
-
-	public void setShieldCounter(int shieldCounter) {
-		ShieldCounter = shieldCounter;
-	}
-	
+	}	
 }

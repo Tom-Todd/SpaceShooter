@@ -57,7 +57,6 @@ public class Game extends BasicGame{
 		container.setTargetFrameRate(60);
 		container.setSmoothDeltas(true);
 		container.setUpdateOnlyWhenVisible(true);
-		container.setFullscreen(true);
 		inGame = new Music("res/inGame.wav");
 		container.setMusicVolume(0.5f);
 		inGame.loop();
@@ -101,7 +100,7 @@ public class Game extends BasicGame{
 					this.loading = true;
 				}
 			}
-			int r = (int)  (3.32*(world.getPlayer().getShieldCounter()/3));
+			int r = (int)  (3.32*(world.getPlayer().getShield().getLifeTime()/3));
 			ShieldBarFull = ShieldBarSheet.getSubImage(0, 0, r, 21);
 		}
 	}
@@ -109,7 +108,6 @@ public class Game extends BasicGame{
 	public void restart() throws SlickException, IOException{
 		lastScore = world.getScore();
 		System.out.println(lastScore);
-		int shieldLife = world.getPlayer().getShieldCounter();
 		world = new World(world.getMap().getCurrentMap());
 		restarted = true;
 	}

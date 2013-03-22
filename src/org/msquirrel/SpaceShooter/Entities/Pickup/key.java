@@ -1,4 +1,4 @@
-package org.msquirrel.SpaceShooter.Entities;
+package org.msquirrel.SpaceShooter.Entities.Pickup;
 
 import org.msquirrel.SpaceShooter.World;
 import org.newdawn.slick.GameContainer;

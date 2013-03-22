@@ -7,6 +7,7 @@ import org.msquirrel.SpaceShooter.Camera;
 import org.msquirrel.SpaceShooter.World;
 import org.msquirrel.SpaceShooter.Entities.Boss;
 import org.msquirrel.SpaceShooter.Entities.EnemyBase;
+import org.msquirrel.SpaceShooter.Entities.EnemyEMP;
 import org.msquirrel.SpaceShooter.TileMap.Tiles.Tile;
 import org.msquirrel.SpaceShooter.TileMap.Tiles.TileDoor;
 import org.msquirrel.SpaceShooter.TileMap.Tiles.TileExit;
@@ -150,7 +151,11 @@ public class Map implements TileBasedMap{
 								if(r == 1){
 									if(world.getEnemies() < enemyNumber){
 										try {
-											world.entities.add(new EnemyBase(x*TILE_SIZE, y*TILE_SIZE, world, world.getPlayer()));
+											if(generator.nextInt(50) != 1){
+												world.entities.add(new EnemyBase(x*TILE_SIZE, y*TILE_SIZE, world, world.getPlayer()));
+											}else{
+												world.entities.add(new EnemyEMP(x*TILE_SIZE, y*TILE_SIZE, world, world.getPlayer()));
+											}
 										} catch (IOException e) {
 											e.printStackTrace();
 										}
