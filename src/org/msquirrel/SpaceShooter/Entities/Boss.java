@@ -92,14 +92,11 @@ public class Boss extends EnemyBase{
 					xAmount = -20;
 					attack1 = false;
 					attacking = false;
-					attack1Count++;
 				}
 			}
-			if(attack2 && attackCounter > 5){
+			if(attack2 && attackCounter > 1){
 				shotTargetX = x + (xAmount);
-				if(generator.nextInt(2) == 1){
-					shotTargetY = y + 100;
-				}
+				shotTargetY = y + 100;
 				world.projectiles.add(new grenade(x+32, y+25, shotTargetX, shotTargetY, world, this));
 				grenadeCount++;
 				attackCounter = 0;
@@ -108,10 +105,10 @@ public class Boss extends EnemyBase{
 					boss.stopAt(2);
 					boss.start();
 					grenadeCount = 0;
+					attack1Count = 0;
 					xAmount = -20;
 					attack2 = false;
 					attacking = false;
-					attack1Count++;
 				}
 			}
 			
@@ -119,13 +116,13 @@ public class Boss extends EnemyBase{
 				coolDown = 0;
 				boss.stopAt(0);
 				boss.start();
-				if(attack1Count < 3){
+				if(attack1Count < 2){
 					attack1 = true;
+					attack1Count++;
 				}
 				else{
 					attack2 = true;
 					xAmount = -100;
-					attack1Count = 0;
 				}
 				attacking = true;
 			}
@@ -137,6 +134,10 @@ public class Boss extends EnemyBase{
 			world.entities.add(new Explosion(x, y, world, world.getWorldEntity(), 0, false, 1));
 			world.entities.add(new Explosion(x-10, y+5, world, world.getWorldEntity(), 30, false,1));
 			world.entities.add(new Explosion(x+15, y, world, world.getWorldEntity(), 50, false,1));
+			world.entities.add(new Explosion(x+50, y+30, world, world.getWorldEntity(), 20, false,1));
+			world.entities.add(new Explosion(x+25, y+30, world, world.getWorldEntity(), 25, false,1));
+			//world.setGameEnded(true);
+			this.alive = false;
 			this.die();
 		}
 		for(int i = 0; i < boss.getFrameCount(); i++){
@@ -154,33 +155,35 @@ public class Boss extends EnemyBase{
 	
 	@Override
 	public void hit(){
-		if(boss.getFrame() == 0){
-			hitPoints --;
-			for(int i = 0; i < boss.getFrameCount(); i++){
-				boss.getImage(i).setColor(0, 1, 0, 0);
-				boss.getImage(i).setColor(1, 1, 0, 0);
-				boss.getImage(i).setColor(2, 1, 0, 0);
-				boss.getImage(i).setColor(3, 1, 0, 0);
-			}
-			if(fightStarted){
-				if(attack1){
-					attacking = false;
-					boss.stopAt(2);
-					boss.start();
-					grenadeCount = 0;
-					xAmount = -20;
-					attack1 = false;
+		if(fightStarted){
+			if(boss.getFrame() == 0){
+				hitPoints --;
+				for(int i = 0; i < boss.getFrameCount(); i++){
+					boss.getImage(i).setColor(0, 1, 0, 0);
+					boss.getImage(i).setColor(1, 1, 0, 0);
+					boss.getImage(i).setColor(2, 1, 0, 0);
+					boss.getImage(i).setColor(3, 1, 0, 0);
 				}
-				if(attack2){
-					attacking = false;
-					boss.stopAt(2);
-					boss.start();
-					attack2 = false;
+				if(fightStarted){
+					if(attack1){
+						attacking = false;
+						boss.stopAt(2);
+						boss.start();
+						grenadeCount = 0;
+						xAmount = -20;
+						attack1 = false;
+					}
+					//if(attack2){
+					//	attacking = false;
+					//	boss.stopAt(2);
+					//	boss.start();
+					//	attack2 = false;
+					//}
 				}
 			}
+			int r = (int)  (16.6*(hitPoints));
+			LifeBarFull = LifeBarSheet.getSubImage(0, 0, r, 21);
 		}
-		int r = (int)  (16.6*(hitPoints));
-		LifeBarFull = LifeBarSheet.getSubImage(0, 0, r, 21);
 	}
 	
 	@Override

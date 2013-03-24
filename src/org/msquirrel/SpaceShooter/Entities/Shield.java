@@ -16,6 +16,7 @@ public class Shield extends Entity{
 		this.lifeTime = 300;
 		ShieldCircle = new Circle(x-23, y-23, 30);
 		this.parent = parent;
+		this.ShieldScale = 1;
 	}
 	
 	@Override
@@ -40,7 +41,9 @@ public class Shield extends Entity{
 			g.setDrawMode(g.MODE_ADD_ALPHA);
 			entityImage.draw(x-24, y-24, ShieldScale);
 			g.setDrawMode(g.MODE_NORMAL);
-			g.draw(ShieldCircle);
+			if(world.isDebugging()){
+				g.draw(ShieldCircle);
+			}
 		}
 	}
 	
@@ -49,7 +52,10 @@ public class Shield extends Entity{
 		for(int i = 0; i < world.projectiles.size(); i++){
 			if(this.ShieldCircle.intersects(world.projectiles.get(i).getHitBox())
 					&& !(world.projectiles.get(i).getOrigin() == this.parent)){
-				world.projectiles.get(i).die();
+				if(parent.isShielded()){
+					world.projectiles.get(i).die();
+					this.lifeTime -=20;
+				}
 			}
 		}
 	}

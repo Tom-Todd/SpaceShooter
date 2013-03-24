@@ -52,10 +52,6 @@ public class projectile extends Entity{
 					die();
 				}
 			}
-			/*if(this.hitBox.intersects(world.getPlayer().getShieldCircle()) 
-					&& Origin != world.getPlayer() && world.getPlayer().isShielded()){
-				die();
-			}*/
 		}
 	}
 	

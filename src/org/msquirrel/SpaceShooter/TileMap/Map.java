@@ -7,7 +7,7 @@ import org.msquirrel.SpaceShooter.Camera;
 import org.msquirrel.SpaceShooter.World;
 import org.msquirrel.SpaceShooter.Entities.Boss;
 import org.msquirrel.SpaceShooter.Entities.EnemyBase;
-import org.msquirrel.SpaceShooter.Entities.EnemyEMP;
+import org.msquirrel.SpaceShooter.Entities.EnemyShielded;
 import org.msquirrel.SpaceShooter.TileMap.Tiles.Tile;
 import org.msquirrel.SpaceShooter.TileMap.Tiles.TileDoor;
 import org.msquirrel.SpaceShooter.TileMap.Tiles.TileExit;
@@ -148,13 +148,19 @@ public class Map implements TileBasedMap{
 							if(map[x][y] instanceof TileGround){
 								Random generator = new Random();
 								int r = generator.nextInt(100);
+								int i = generator.nextInt(50);
 								if(r == 1){
 									if(world.getEnemies() < enemyNumber){
 										try {
-											if(generator.nextInt(50) != 1){
-												world.entities.add(new EnemyBase(x*TILE_SIZE, y*TILE_SIZE, world, world.getPlayer()));
+											if(currentMap > 0){
+												if(i <= 40){
+													world.entities.add(new EnemyBase(x*TILE_SIZE, y*TILE_SIZE, world, world.getPlayer()));
+												}
+												if(i > 40){
+													world.entities.add(new EnemyShielded(x*TILE_SIZE, y*TILE_SIZE, world, world.getPlayer()));
+												}
 											}else{
-												world.entities.add(new EnemyEMP(x*TILE_SIZE, y*TILE_SIZE, world, world.getPlayer()));
+												world.entities.add(new EnemyBase(x*TILE_SIZE, y*TILE_SIZE, world, world.getPlayer()));
 											}
 										} catch (IOException e) {
 											e.printStackTrace();
@@ -170,7 +176,8 @@ public class Map implements TileBasedMap{
 			}
 		}if(this.currentMap == 2){
 			try {
-				world.entities.add(new Boss(990, 850, world, world.getPlayer()));
+				world.setBoss(new Boss(990, 850, world, world.getPlayer()));
+				world.entities.add(world.getBoss());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

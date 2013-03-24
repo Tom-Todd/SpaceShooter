@@ -13,16 +13,16 @@ public class ImageLoader {
 	public Image glow;
 	
 	public ImageLoader() throws SlickException{
-		player = new Image("res/Player.png");
-		enemy = new Image("res/Player.png");
+		//player = new Image("res/Player.png");
+		//enemy = new Image("res/Player.png");
 		ShieldPickup = new Image("res/Shield.png");
 		Shield = new Image("res/playerShield.png");
 		Bullet = new Image("res/bullet.png");
 		Key = new Image("res/key.png");
 		glow = new Image("res/glow.png");
 		
-		player.setFilter(Image.FILTER_NEAREST);
-		enemy.setFilter(Image.FILTER_NEAREST);
+		//player.setFilter(Image.FILTER_NEAREST);
+		//enemy.setFilter(Image.FILTER_NEAREST);
 		ShieldPickup.setFilter(Image.FILTER_NEAREST);
 		Shield.setFilter(Image.FILTER_NEAREST);
 		Bullet.setFilter(Image.FILTER_NEAREST);

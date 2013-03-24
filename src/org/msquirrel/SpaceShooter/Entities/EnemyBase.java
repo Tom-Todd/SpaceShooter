@@ -35,6 +35,7 @@ public class EnemyBase extends Entity implements Mover{
 	protected int attackTime;
 	protected boolean Spotted;
 	protected boolean playerVisible;
+	protected Rectangle worldClip;
 	
 	public EnemyBase(float x, float y, World world, Player player) throws SlickException, IOException {
 		super(x, y, world);
@@ -47,7 +48,7 @@ public class EnemyBase extends Entity implements Mover{
 		this.nextY = y;
 		this.attackTime = 50;
 		moved = true;
-		entityImage = world.getImages().enemy;
+		entityImage = new Image("res/enemy.png");
 		hitBox = new Rectangle(x,y,entityImage.getWidth(),entityImage.getHeight());
 	}
 	
@@ -68,7 +69,18 @@ public class EnemyBase extends Entity implements Mover{
 		if(!playerVisible && plrDistance > 10){
 			Spotted = false;
 		}
-
+		
+		float deltaX = 0;
+		float deltaY = 0;
+		if(Spotted){
+			deltaX = player.x+cam.getX() - (x+ cam.getX());
+			deltaY = player.y+cam.getY() - (y+ cam.getY());
+		}else{
+			deltaX = nextX - (x+ cam.getX());
+			deltaY = nextY - (y+ cam.getY());
+		}
+		entityImage.setRotation((float) ((Math.toDegrees(Math.atan2(deltaY, deltaX))-90 )));
+		
 		if(playerVisible && plrDistance < 12 && !player.isInSafeZone() && difX < 10 && difY < 6){
 			attacking = true;
 		}else{
@@ -188,6 +200,7 @@ public class EnemyBase extends Entity implements Mover{
 				moved = true;
 			}
 		}
+	
 	}
 	
 	@Override
@@ -218,6 +231,7 @@ public class EnemyBase extends Entity implements Mover{
 		entityImage.setColor(2, 1, 1, 1);
 		entityImage.setColor(3, 1, 1, 1);
 		entityImage.draw(x,y);
+		this.worldClip = g.getWorldClip();
 		if(world.isDebugging()){
 			if(CurPath != null){
 				for (int l = 0; l < CurPath.getLength(); l++){

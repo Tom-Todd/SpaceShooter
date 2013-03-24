@@ -45,6 +45,8 @@ public class World {
 	private boolean debugging;
 	private Boss boss;
 	private Entity worldEntity;
+	private boolean gameEnded;
+	private int gameEndCounter;
 	
 	public World(int Map) throws SlickException{
 		this.cam = new Camera(50,200);
@@ -103,7 +105,16 @@ public class World {
 		if(player.getY() < 1093 && map.getCurrentMap() == 2){
 			map.closeDoors();
 		}
+		if(boss != null){
+			if(!boss.isAlive()){
+				gameEndCounter ++;
+				if(this.gameEndCounter > 500){
+					this.gameEnded = true;
+				}
+			}
+		}
 	}
+	
 	public void draw(Graphics g){
 		background.draw();
 		g.scale(cam.getScaleX(), cam.getScaleY());
@@ -117,14 +128,16 @@ public class World {
 		}
 		g.setColor(Color.white);
 		g.resetTransform();
-		String enemyNo = Integer.toString(enemies);
-		g.drawString("Enemies- " + enemyNo, 10, 30);
-		String ec = Integer.toString(entityCount);
-		g.drawString("Entities- " + ec, 10, 50);
-		String px = Float.toString(player.getX());
-		g.drawString("PlayerX- " + px, 10, 70);
-		String py = Float.toString(player.getY());
-		g.drawString("PlayerY- " + py, 10, 90);
+		if(debugging){
+			String enemyNo = Integer.toString(enemies);
+			g.drawString("Enemies- " + enemyNo, 10, 30);
+			String ec = Integer.toString(entityCount);
+			g.drawString("Entities- " + ec, 10, 50);
+			String px = Float.toString(player.getX());
+			g.drawString("PlayerX- " + px, 10, 70);
+			String py = Float.toString(player.getY());
+			g.drawString("PlayerY- " + py, 10, 90);
+		}
 	}
 
 	public void loadMap(int Map) throws SlickException {
@@ -239,4 +252,27 @@ public class World {
 	public void setWorldEntity(Entity worldEntity) {
 		this.worldEntity = worldEntity;
 	}
+	public boolean isGameEnded() {
+		return gameEnded;
+	}
+	public void setGameEnded(boolean gameEnded) {
+		this.gameEnded = gameEnded;
+	}
+
+	public Boss getBoss() {
+		return boss;
+	}
+
+	public void setBoss(Boss boss) {
+		this.boss = boss;
+	}
+
+	public int getGameEndCounter() {
+		return gameEndCounter;
+	}
+
+	public void setGameEndCounter(int gameEndCounter) {
+		this.gameEndCounter = gameEndCounter;
+	}
+	
 }

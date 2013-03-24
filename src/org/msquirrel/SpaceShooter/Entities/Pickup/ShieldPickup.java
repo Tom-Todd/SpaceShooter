@@ -4,14 +4,17 @@ import org.msquirrel.SpaceShooter.World;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 
 public class ShieldPickup extends PickUp{
+	private Sound sound;
 
 	public ShieldPickup(float x, float y, World world) throws SlickException {
 		super(x, y, world);
 		this.entityImage = world.getImages().ShieldPickup;
 		this.height = entityImage.getHeight();
 		this.width = entityImage.getWidth();
+		this.sound = new Sound("res/pickupShield.wav");
 	}
 	
 	@Override
@@ -22,6 +25,7 @@ public class ShieldPickup extends PickUp{
 			}else{
 				world.getPlayer().getShield().setLifeTime(300);
 			}
+			sound.play();
 			this.die();
 		}
 	}

@@ -68,6 +68,7 @@ public class Game extends BasicGame{
 		fontLarge.getEffects().add(new ColorEffect());  // Create a default white color effect
 		font.loadGlyphs();
 		fontLarge.loadGlyphs();
+		container.setShowFPS(false);
 	}
 
 	@Override
@@ -77,7 +78,10 @@ public class Game extends BasicGame{
 			if(paused)inGame.resume();
 			paused = !paused;
 		}
-		if(container.getInput().isKeyPressed(Input.KEY_F1))world.setDebugging(!world.isDebugging());
+		if(container.getInput().isKeyPressed(Input.KEY_F1)){
+			world.setDebugging(!world.isDebugging());
+			container.setShowFPS(!container.isShowingFPS());
+		}
 		if(!paused){
 			if(this.loading){
 				if(!restarted){
@@ -103,12 +107,22 @@ public class Game extends BasicGame{
 			int r = (int)  (3.32*(world.getPlayer().getShield().getLifeTime()/3));
 			ShieldBarFull = ShieldBarSheet.getSubImage(0, 0, r, 21);
 		}
+		if(world.isGameEnded()){
+			try {
+				this.restart();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public void restart() throws SlickException, IOException{
 		lastScore = world.getScore();
-		System.out.println(lastScore);
-		world = new World(world.getMap().getCurrentMap());
+		if(world.isGameEnded()){
+			world = new World(0);
+		}else{
+			world = new World(world.getMap().getCurrentMap());
+		}
 		restarted = true;
 	}
 
@@ -133,7 +147,17 @@ public class Game extends BasicGame{
 			g.setFont(fontLarge);
 			g.drawString("Paused", 270, 20);
 		}
-		
+		if(world.getBoss() != null){
+			if(!world.getBoss().isAlive()){
+				g.setFont(font);
+				String score = Integer.toString(lastScore);
+				g.setColor(Color.black);
+				g.fillRect(0, 0, container.getWidth(), container.getHeight());
+				g.setColor(Color.white);
+				g.drawString("Well Done, You've saved the Ship", 140, 300);
+				g.drawString("Score: " + score, 330, 320);
+			}
+		}
 	}
 	
 	public static void main(String[] argv) {

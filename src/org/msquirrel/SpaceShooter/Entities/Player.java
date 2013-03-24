@@ -16,6 +16,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Rectangle;
@@ -24,6 +25,7 @@ import org.newdawn.slick.particles.ParticleIO;
 import org.newdawn.slick.particles.ParticleSystem;
 
 public class Player extends Entity{
+	private Sound fire;
 	
 	public Player(float x, float y, World world) throws SlickException{
 		super(x, y, world);
@@ -33,6 +35,7 @@ public class Player extends Entity{
 		entityImage = new Image("res/PlayerSprites.png");
 		hitBox = new Rectangle(x, y, this.width, this.height);
 		this.Shield = new Shield(x, y, world, this);
+		fire = new Sound("res/fire.wav");
 		world.addEntity(Shield);
 	}
 	
@@ -43,8 +46,8 @@ public class Player extends Entity{
 		movingLeft = container.getInput().isKeyDown(Input.KEY_A);	
 		movingDown = container.getInput().isKeyDown(Input.KEY_S);
 		if(!world.isLoadingMap()){
-			if(container.getInput().isMouseButtonDown(1)){ //<------this line for windows
-				//if(container.getInput().isKeyDown(Input.KEY_SPACE)){ //<---------this line for MAC version
+			//if(container.getInput().isMouseButtonDown(1)){ //<------this line for windows
+				if(container.getInput().isKeyDown(Input.KEY_SPACE)){ //<---------this line for MAC version
 				shielded = true;
 			}else{
 				shielded = false;
@@ -53,6 +56,7 @@ public class Player extends Entity{
 				world.projectiles.add(new bullet(this.x+(this.width)/2, this.y+(this.height)/2, 
 						(float)container.getInput().getMouseX() - cam.getX(), (float)container.getInput().getMouseY() - cam.getY(), 
 						world, this));
+				fire.play();
 				attackCounter = 0;
 			}
 			float deltaX = container.getInput().getMouseX() - (x+ cam.getX());
@@ -171,7 +175,6 @@ public class Player extends Entity{
 			this.dying = true;
 		}
 		if(shielded){
-			Shield.setLifeTime(Shield.getLifeTime()-20);
 			if(Shield.getLifeTime() < 0){
 				Shield.setLifeTime(0);
 			}
